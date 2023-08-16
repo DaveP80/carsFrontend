@@ -1,0 +1,13 @@
+.logo:hover {
+  transform: scale(1.2);
+}
+
+.home:hover {
+  transform: scale(1.2);
+}
+.index:hover {
+  transform: scale(1.2);
+}
+.addcar:hover {
+  transform: scale(1.2);
+}

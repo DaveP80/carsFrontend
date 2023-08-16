@@ -1,0 +1,24 @@
+html,
+body {
+  background-color: #495057;
+}
+
+.delete-icon:hover {
+  transform: scale(1.4);
+}
+
+.edit-icon:hover {
+  transform: scale(1.4);
+}
+
+.poster {
+  width: 22vw;
+  height: 29vw;
+}
+
+@media (max-width: 700px) {
+  .poster {
+    width: 40vw;
+    height: 50vw;
+  }
+}

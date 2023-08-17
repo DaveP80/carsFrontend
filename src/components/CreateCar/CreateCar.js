@@ -7,20 +7,24 @@ import "./CreateCar.css";
 
 function CreateCar() {
   let navigate = useNavigate();
-  const dates = generateDates();
-  const [selectedOptions, setSelectedOptions] = useState(["usa"]);
-  const [entry, setEntry] = useState({
-  });
 
-  const handleSelectChange = (event) => {
-    let selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    if (!selectedValues.length) selectedValues = ["usa"];
-    setSelectedOptions(selectedValues);
-    setEntry({ ...entry, ["preferences"]: selectedValues.join(", ") });
-  };
+  const [entry, setEntry] = useState({
+    make: "",
+    model: "",
+    mpg: 23,
+    cylinders: 6,
+    //optional
+    displacement: 194,
+    horsepower: 105,
+    weight: 2974,
+    //optional
+    acceleration: 15.6,
+    origin: "usa",
+    //between 70 and 99
+    model_year: 76,
+    preferences: { imageURL: null, color: null }
+  });
+  const [showMore, setShowMore] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -35,8 +39,10 @@ function CreateCar() {
         );
         return;
       }
-
-      await newEntry(entry).then((response) => {
+      let temp = entry;
+      temp['name'] = entry.make + " " + entry.model.trim();
+      delete temp.make; delete temp.model;
+      await newEntry(temp).then((response) => {
         navigate(`/cars/${response.data.id}`);
       });
     } catch (e) {
@@ -48,59 +54,38 @@ function CreateCar() {
     setEntry({ ...entry, [e.target.name]: e.target.value });
   }
 
-  return (
-    <div className="container bg-light form-container">
-      <h3 className="text-center mb-4">New Entry</h3>
-      <div className="row justify-content-center">
-        <div className="col-lg-6 col-md-8">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label
-                className="fs-5 fw-medium form-label"
-                htmlFor="name"
-              >
-                Name
-              </label>
-              <input
-                required
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                onChange={handleCarInput}
-                value={entry.name}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="fs-5 fw-medium form-label" htmlFor="name">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="form-control"
-                onChange={handleCarInput}
-                value={entry.name}
-              />
-            </div>
+  function handleSwitch() {
+    setShowMore(!showMore);
+    if (!showMore) setEntry({ ...entry, displacement: 194, acceleration: 15.6 }); 
+  }
 
-            <div className="mb-3">
-              <label
-                className="fs-5 fw-medium form-label"
-                htmlFor="origin"
-              >
-                origin
-              </label>
-              <select
+  return (
+    <div className="container mt-2">
+      <header>
+       
+    <h2>Create New Entry</h2>
+    <p>Please fill in the required fields below:</p>
+    <p>Adding an image is optional:</p>
+    <div class="form-check form-switch" style={{float: 'right'}}>
+  <input class="form-check-input" type="checkbox" role="switch" checked={showMore} onChange={handleSwitch} id="flexSwitchCheckDefault"/>
+  <label class="form-check-label" for="flexSwitchCheckDefault">Advanced Form</label>
+
+   
+</div>
+
+      </header>
+    <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label htmlFor="make" className="form-label">Make</label>
+        <select
                 required
                 className="form-control"
-                id="origin"
-                name="origin"
-                value={entry.origin}
+                id="make"
+                name="make"
+                value={entry.make}
                 onChange={handleCarInput}
               >
-                {selectColor.map((item, i) => {
+                {carmakers.sort().map((item, i) => {
                   return (
                     <option value={item} key={i}>
                       {item}
@@ -108,131 +93,143 @@ function CreateCar() {
                   );
                 })}
               </select>
-            </div>
-
-            <div className="mb-3">
-              <label className="fs-5 fw-medium form-label" htmlFor="model">
-                Model
-              </label>
-              <textarea
-                required
-                placeholder=""
-                name="name"
-                id="name"
-                className="form-control"
-                rows="3"
-                onChange={handleCarInput}
-                value={entry.name.split(" ").slice(1)}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="fs-5 fw-medium form-label" htmlFor="mpg">
-                mpg
-              </label>
-              <input
-                type="text"
+      </div>
+      <div className="mb-3">
+        <label htmlFor="model" className="form-label">Model</label>
+        <input type="text" className="form-control" id="model" 
+          onChange={handleCarInput}
+          value={entry.model}
+          placeholder="please fill"
+          name="model"
+        required />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="mpg" className="form-label">mpg</label>
+                   <input
+                placeholder="10 - 45"
+                type="number"
+                step="0.10"
+                min="9"
+                max="47"
                 name="mpg"
                 id="mpg"
                 className="form-control"
                 onChange={handleCarInput}
                 value={entry.mpg}
               />
-            </div>
-
-            <div className="mb-3">
-              <label
-                className="fs-5 fw-medium form-label"
-                htmlFor="model_year"
-              >
-                Model Year
-              </label>
-              <select
-                required
-                className="form-control"
-                id="model_year"
-                name="model_year"
-                value={entry.release_date}
-                onChange={handleCarInput}
-              >
-                {dates.map((option, i) => (
-                  <option key={i} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-3">
-              <label
-                className="fs-5 fw-medium form-label"
-                htmlFor="vote_average"
-              >
-                Your Score
-              </label>
-              <input
-                placeholder="1 - 10"
-                type="number"
-                step="0.10"
-                min="1"
-                max="10"
-                name="vote_average"
-                id="vote_average"
-                className="form-control"
-                onChange={handleCarInput}
-                value={entry.vote_average}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="fs-5 fw-medium form-label" htmlFor="weight">
-                Weight
-              </label>
-              <input
-                required
-                placeholder="Enter number, like 120"
+      </div>
+      <div className="mb-3">
+        <label htmlFor="cyl" className="form-label">cylinders</label>
+                   <input
                 type="number"
                 step="1"
-                min="1"
-                max="999"
+                min="4"
+                max="8"
+                name="cylinders"
+                id="cyl"
+                className="form-control"
+                onChange={handleCarInput}
+                value={entry.cylinders}
+              />
+      </div>
+      {showMore && 
+      <div className="mb-3">
+        <label htmlFor="disp" className="form-label">displacement</label>
+                   <input
+                type="number"
+                step="1"
+                min="68"
+                max="455"
+                name="displacement"
+                id="disp"
+                className="form-control"
+                onChange={handleCarInput}
+                value={entry.displacement}
+              />
+      </div>
+      }
+      <div className="mb-3">
+        <label htmlFor="hp" className="form-label">horsepower</label>
+                   <input
+                type="number"
+                step="1"
+                min="46"
+                max="280"
+                name="horsepower"
+                id="hp"
+                className="form-control"
+                onChange={handleCarInput}
+                value={entry.horsepower}
+              />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="wt" className="form-label">weight</label>
+                   <input
+                type="number"
+                step="1"
+                min="1600"
+                max="5200"
                 name="weight"
-                id="weight"
+                id="wt"
                 className="form-control"
                 onChange={handleCarInput}
                 value={entry.weight}
               />
-            </div>
-
-            <div className="mb-3">
-              <label
-                className="fs-5 fw-medium form-label"
-                htmlFor="color"
-              >
-                Colors
-              </label>
-              <select
-                multiple
-                value={selectedOptions}
-                onChange={handleSelectChange}
-                className="form-control"
-                id="colors"
-              >
-                {origin.map((option, i) => (
-                  <option key={`${option.substring(0, 2)}${i}`} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="d-grid gap-2 mt-4 mb-4 col-6">
-              <button className="btn btn-primary" type="submit">
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
-    </div>
+      {showMore &&
+      <div className="mb-3">
+        <label htmlFor="acc" className="form-label">acceleration</label>
+                   <input
+                type="number"
+                step=".10"
+                min="8"
+                max="25"
+                name="acceleration"
+                id="acc"
+                className="form-control"
+                onChange={handleCarInput}
+                value={entry.acceleration}
+              />
+      </div>
+      }
+      <div className="mb-3">
+        <label htmlFor="m-year" className="form-label">model year</label>
+        <select
+                className="form-control"
+                id="m-year"
+                name="model_year"
+                value={entry.model_year}
+                onChange={handleCarInput}
+              >
+                {Array.from({ length: 100 - 70 + 1 }, (_, index) => 70 + index).map((item, i) => {
+                  return (
+                    <option value={item < 100 ? item : 20} key={i}>
+                      {item < 100 ? item : 20}
+                    </option>
+                  );
+                })}
+              </select>
+      </div>
+      <div className="mb-3">
+          <label className="form-label">origin</label>
+          {origin.map((region) => (
+            <div className="form-check-inline" key={region}>
+              <input
+                type="radio"
+                className="form-check-input"
+                id={region}
+                value={region}
+                name="origin"
+                checked={entry.origin === region}
+                onChange={handleCarInput}
+              />
+              <label className="form-check-label" htmlFor={region}>{region}</label>
+            </div>
+          ))}
+        </div>
+      <button type="submit" className="btn btn-primary mb-2">Submit</button>
+    </form>
+  </div>
   );
 }
 

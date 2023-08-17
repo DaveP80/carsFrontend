@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { editCarInDB } from "../api";
 import {
-  car,
-  setCar,
   validateForm,
   compareObjects,
   selectColor,
@@ -19,7 +17,6 @@ function EditCar() {
     selectedOptions,
     setSelectedOptions,
   } = useContext(FormContext);
-  const dates = generateDates();
 
   const handleSelectChange = (event) => {
     let selectedValues = Array.from(
@@ -38,7 +35,7 @@ function EditCar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      compareObjects(entry, car) ||
+      compareObjects(entry, entry) ||
       !validateForm.every((item) => entry[item] !== "" || entry[item] !== null)
     ) {
       alert("Please enter on more fields");
@@ -52,7 +49,6 @@ function EditCar() {
     await editCarInDB(entry, id)
       .then((res) => {
         setShowForm(false);
-        setCar(res.data);
         setEntry(res.data);
       })
       .catch((e) => console.log(e));
@@ -141,7 +137,7 @@ function EditCar() {
               value={entry.model_year}
               onChange={handleCarInput}
             >
-              {dates.map((option, i) => (
+              {[1,2,3].map((option, i) => (
                 <option key={i} value={option}>
                   {option}
                 </option>

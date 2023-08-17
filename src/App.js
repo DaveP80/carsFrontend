@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import { CarContext } from "./components/Context/context";
 import CreateCar from "./components/CreateCar/CreateCar";
 import Spinner from "./common/Spinner";
-import fetchPopularCars from './components/api'
+import { fetchPopularCars } from "./components/api";
 import "./App.css";
 
 function App() {

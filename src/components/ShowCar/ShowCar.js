@@ -6,10 +6,11 @@ import { CarContext, FormContext } from "../Context/context";
 import { FaTrash, FaEdit, FaThumbsUp } from "react-icons/fa";
 import DeleteCar from "../DeleteCar/DeleteCar";
 import EditCar from "../EditCar/EditCar";
+import { logo } from "../../assets";
 import "./Car.css";
 
 function ShowCar() {
-  const { isLoading, setIsLoading, data, } =
+  const { isLoading, setIsLoading, data, popularCars, } =
     useContext(CarContext);
   const { id } = useParams();
   const [car, setCar] = useState(null);
@@ -17,6 +18,7 @@ function ShowCar() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [entry, setEntry] = useState({});
   const [showDel, setShowDel] = useState(false);
+  const [popul, setPopul] = useState(null)
   const navigate = useNavigate();
 
   const formContextValue = {
@@ -33,6 +35,9 @@ function ShowCar() {
 
   useEffect(() => {
     setIsLoading(true);
+    if (!data && !localStorage.getItem('popularcar')) {
+      popularCars();
+    }
     fetchCarById(id)
       .then((res) => {
         setCar(res.data[0]);
@@ -69,33 +74,25 @@ function ShowCar() {
                       <h2 className="text-warning">
                         {car.name}
                       </h2>
-                      <p className="text-warning">{car.mpg}</p>
+                      <p className="text-warning">{'mpg: ' + car.mpg || 'N/A'}</p>
                     </div>
 
                     <h5 className="text-warning">
                       <span className="fw-bolder">Model Year</span>:{" "}
-                      {car.model_year}
+                      {car.model_year || 'N/A'}
                     </h5>
-                    <h5 className="text-warning">
-                      <span className="fw-bolder">weight</span>:{" "}
-                      {car.weight??'2000'}lbs
-                    </h5>
-                    {car.revenue ? (
-                      <h6 className="text-warning">
+                      <h5 className="text-warning">
                         <span className="fw-bolder">horsepower</span>: $
                         {car.horsepower??'135'}
-                      </h6>
-                    ) : (
-                      " "
-                    )}
-                    {car.popularity ? (
+                      </h5>
+                    <h6 className="text-warning">
+                      <span className="fw-bolder">weight</span>:{" "}
+                      {car.weight??'2000'}lbs
+                    </h6>
                       <h6 className="text-warning">
-                        <span className="fw-bolder">Popularity</span>:{" "}
-                        {data}
+                        <span className="fw-bolder">origin </span>:{" "}
+                        {car.origin}
                       </h6>
-                    ) : (
-                      " "
-                    )}
                     <p className="text-warning">
                       <span className="fw-bolder">Overview</span>:{" "}
                       {car.overview || car.tagline}
@@ -135,14 +132,13 @@ function ShowCar() {
                           src={
                             car.preferences.imageURL
                               ? car.preferences.imageURL
-                              : ""
+                              : logo
                           }
                           alt={car.name}
                           className="poster img-fluid rounded-1 text-align-center"
                         />
 
                         <div className="mt-1 text-secondary">
-                          Original car Poster
                         </div>
                       </div>
                     </div>

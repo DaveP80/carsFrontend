@@ -74,7 +74,6 @@ export const carmakers = [
     "mercury",
     "plymouth",
     "subaru",
-    "chevroelt",
     "triumph",
     "vokswagen",
     "dodge"
@@ -88,8 +87,9 @@ export const selectColor = [
 export const origin = ["usa", "europe", "japan"];
 
 export const validateForm = [
-    "car_id",
-    "name",
-    "comment",
-    "isinterested"
+    "make",
+    "model",
+    "horsepower",
+    "model_year",
+    "origin"
 ];

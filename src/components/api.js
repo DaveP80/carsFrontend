@@ -1,6 +1,8 @@
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 const API3 = process.env.REACT_APP_API_URL3;
+const ID = process.env.REACT_APP_API_CSEID;
+const KEY = process.env.REACT_APP_API_CSEKEY;
 
 export async function fetchCarData() {
   try {
@@ -91,6 +93,15 @@ export async function newEntry(entry) {
 export async function editCarInDB(body, id) {
   try {
     const result = await axios.put(`${API}/cars/${id}`, body);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function fetchCarImage(data) {
+  try {
+    const result = await axios.get(`https://www.googleapis.com/customsearch/v1?q=${data}&cx=${ID}&searchType=image&num=5&key=${KEY}`);
     return result;
   } catch (e) {
     console.log(e);

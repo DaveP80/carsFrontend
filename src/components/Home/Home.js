@@ -70,10 +70,6 @@ function Home() {
             <button className="close-button" onClick={handleCloseModal}>
               Close
             </button>
-            <Helmet>
-              <script async src="https://cse.google.com/cse.js?cx=1559144145c1f40b9"></script>
-            </Helmet>
-            <div className="gcse-search"></div>
           </div>
         </div>
       )}

@@ -31,10 +31,11 @@ export function compareObjects(obj1, obj2) {
     }
     return true;
 }
-
-export function avgpopularity(title, data) {
+//return engagement count if count greater than 1
+export function isPopular(id, data) {
     try {
-        return data.find(item => item.original_title == title);
+        let result = data.find(item => item.id == id);
+        if (+result.count> 1) return +result.count;
     } catch (e) {
         return null
     }
@@ -67,7 +68,6 @@ export const carmakers = [
     "oldsmobile",
     "mercedes-benz",
     "bmw",
-    "maxda",
     "volvo",
     "pontiac",
     "honda",
@@ -75,7 +75,6 @@ export const carmakers = [
     "plymouth",
     "subaru",
     "triumph",
-    "vokswagen",
     "dodge"
 ];
 

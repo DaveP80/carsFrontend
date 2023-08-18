@@ -11,11 +11,17 @@ import { FormContext } from "../Context/context";
 
 function EditCar() {
   const {
+    setCar,
+    car,
     setShowForm,
     setEntry,
     entry,
     selectedOptions,
     setSelectedOptions,
+    setShowDel,
+    id,
+    count,
+    setCount,
   } = useContext(FormContext);
 
   const handleSelectChange = (event) => {

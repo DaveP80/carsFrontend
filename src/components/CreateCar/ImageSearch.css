@@ -1,35 +1,5 @@
-.checkbox-labelmm {
-    position: relative;
-    display: block;
-    margin-top: 5px;
-    cursor: pointer;
+.selected-item {
+    border: 1em solid green;
   }
   
-  .form-check-inputmm {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .checkmarkmm {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #00b300; /* Green color */
-  }
-  
-  .form-check-inputmm:checked ~ .checkmarkmm:after {
-    content: "";
-    position: absolute;
-    display: block;
-    left: 7px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
   

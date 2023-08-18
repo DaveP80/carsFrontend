@@ -1,34 +1,61 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import "./Searchbar.css";
-
-function Searchbar() {
-  const [search, setSearch] = useState("");
+function SearchBar({ searchArr }) {
+  const [searchText, setSearchText] = useState('');
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (search === "" || search.length < 2) return;
-    navigate(`/search?query=${encodeURIComponent(search)}`);
-    setSearch("");
+  const handleInputChange = (event) => {
+    const inputText = event.target.value;
+    setSearchText(inputText);
+    const filtered = searchArr.filter(
+      suggestion =>
+        suggestion.name.toLowerCase().includes(inputText.toLowerCase())
+    );
+    setFilteredSuggestions(filtered);
+    if (inputText.length < (query.name && query.name.length)) setQuery("")
+    if (inputText.length === 0) setFilteredSuggestions([])
   };
-  return (
-    <form className="d-flex" role="search" onSubmit={handleSubmit}>
-      <input
-        className="form-control me-2 searchbar"
-        type="search"
-        placeholder="search"
-        aria-label="Search"
-        name="search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button className="btn btn-outline-warning" type="submit">
-        Search
-      </button>
-    </form>
-  );
-}
 
-export default Searchbar;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (typeof query === 'string') return;
+    // Perform your search or other action here
+    else if (query.hasOwnProperty('name')) {
+      setSearchText('');
+      setQuery("");
+      setFilteredSuggestions([])
+      navigate(`/cars/${query.id}`);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="d-flex">
+        <input
+          type="text"
+          value={searchText}
+          onChange={handleInputChange}
+          className="form-control me-2"
+          placeholder="Search"
+        />
+        <button type="submit" className="btn btn-primary">
+          Search
+        </button>
+      </form>
+      {filteredSuggestions.length > 0 && (
+        <ul className="list-group mt-2" style={{ cursor: 'pointer', maxHeight: '5em', overflowY: 'auto' }}>
+          {filteredSuggestions.map((suggestion, index) => (
+            <li className="list-group-item" key={index} onClick={() => { setQuery(suggestion); setSearchText(suggestion.name); }}>
+              {`${suggestion.name} --year '${suggestion.model_year}`}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default SearchBar;

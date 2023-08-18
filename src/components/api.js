@@ -1,6 +1,8 @@
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
+const API2 = process.env.REACT_APP_API_URL2;
 const API3 = process.env.REACT_APP_API_URL3;
+const API4 = process.env.REACT_APP_API_URL4;
 const ID = process.env.REACT_APP_API_CSEID;
 const KEY = process.env.REACT_APP_API_CSEKEY;
 
@@ -16,6 +18,15 @@ export async function fetchCarData() {
 export async function fetchIndexData() {
   try {
     const result = await axios.get(`${API}/cars/limit/100`);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getSearchSugg() {
+  try {
+    const result = await axios.get(API4);
     return result;
   } catch (e) {
     console.log(e);

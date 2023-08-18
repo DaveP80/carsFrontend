@@ -1,23 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { selectColor } from '../helper';
 import { fetchCarImage } from '../api';
 import './ImageSearch.css'
+import FormOverlay from '../../common/FormOverlay';
+import { CarContext } from '../Context/context';
+import FormSpinner from '../../common/FormSpinner';
 
 function ImageSearch({ entry, setEntry, setShowModal, }) {
+    const Results = React.lazy(() =>
+        import("./Results")
+    );
     const [selColor, setSelColor] = useState(selectColor[0]);
     const [apiData, setApiData] = useState({});
+    const { isLoading, setIsLoading } = useContext(CarContext)
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Make an API call here based on the selected color
-        // http 'https://www.googleapis.com/customsearch/v1?q=ford pinto 1974 green&cx=1559144145c1f40b9&searchType=image&num=5&key=AIzaSyBnKLP5a0ASM8h5iLAsPGhBMlBvHjKoKc8'
+        setIsLoading(true);
         fetchCarImage(`${entry.make} ${entry.model.trim()} ${Number(entry.model_year) < 100 ? '19' + entry.model_year.toString()
-            : entry.model_year.toString() + '00'} ${selColor}`).then(res => setApiData(res.data));
+            : entry.model_year.toString() + '00'} ${selColor}`).then(res => { setApiData(res.data); setIsLoading(false); });
     };
 
-    const handleCheckboxClick = (data) => {
-        setEntry({...entry, preferences: { imageURL: data['image']['thumbnailLink'], color: selColor.toLowerCase()}})
+    const handleImgClick = (data) => {
+        setEntry({ ...entry, preferences: { imageURL: data['image']['thumbnailLink'], color: selColor.toLowerCase() } })
+    }
+
+    const handleXClick = () => {
+        setEntry({ ...entry, preferences: { imageURL: null, color: null } })
+        setShowModal(false)
     }
     return (
         <>
@@ -31,57 +41,57 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                onClick={() => setShowModal(false)}
+                                onClick={handleXClick}
                             >
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="colors">Select color</label>
-                                    <select
-                                        className="form-control"
-                                        id="colors"
-                                        value={selColor}
-                                        onChange={(e) => setSelColor(e.target.value)}
-                                    >
-                                        {
-                                            selectColor.sort().map((color, i) => {
-                                                return (
-                                                    <option key={color + i.toString()} value={color}>{color}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="form-group">
+                                            <label htmlFor="colors">Select color</label>
+                                            <select
+                                                className="form-control"
+                                                id="colors"
+                                                value={selColor}
+                                                onChange={(e) => setSelColor(e.target.value)}
+                                            >
+                                                {selectColor.sort().map((color, i) => {
+                                                    return (
+                                                        <option key={color + i.toString()} value={color}>
+                                                            {color}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <button type="submit" className="btn btn-primary mt-4">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <button type="submit" className="btn btn-primary">
-                                    Submit
-                                </button>
-                            </form>
+                            </div>
 
-                            {apiData.hasOwnProperty('items') && (
-                                <div className="mt-3">
-                                    <h5>Select One:</h5>
-                                    <div className="row">
-                                        {apiData['items'].map((result, index) => (
-                                            <div key={index} className="col-md-4 mb-3">
-                                                <div className="border p-3">
-                                                    <img src={result['image']['thumbnailLink']} className="img-fluid" alt="car" />
-                                                    <label className="checkbox-labelmm">
-                                                        <input
-                                                            type="checkbox"
-                                                            className="form-check-inputmm"
-                                                            onChange={() => handleCheckboxClick(result)}
-                                                        />
-                                                        <span className="checkmarkmm"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+
+                            <React.Suspense fallback={<FormSpinner />}>
+
+                                <FormOverlay isLoading={isLoading}>
+
+                                    {apiData.hasOwnProperty('items') && (
+
+                                        <Results apiData={apiData} handleImgClick={handleImgClick} entry={entry} />
+
+
+                                    )}
+                                </FormOverlay>
+
+                            </React.Suspense>
+
+
                         </div>
                         <div className="modal-footer">
                             <button
@@ -90,7 +100,7 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
                                 data-dismiss="modal"
                                 onClick={() => setShowModal(false)}
                             >
-                               { entry.preferences.imageURL ? 'Save' : 'Close'}
+                                {entry.preferences.imageURL ? 'Save' : 'Close'}
                             </button>
                         </div>
                     </div>

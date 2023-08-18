@@ -1,9 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { ccar } from "../../assets";
+import { getSearchSugg } from "../api";
 import Searchbar from "../Searchbar/Searchbar";
 
 function Nav() {
+  const location = useLocation();
+  const [searchArr, setSearchArr] = useState(null)
+  useEffect(() => {
+    getSearchSugg().then(res => setSearchArr(res.data)).catch(e => console.log(e))
+  }, [location])
+
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-dark border-bottom border-black">
       <Link
@@ -52,7 +59,7 @@ function Nav() {
             </Link>
           </li>
         </ul>
-        <Searchbar />
+        <Searchbar searchArr={searchArr} />
       </div>
     </nav>
   );

@@ -29,14 +29,15 @@ function CreateCar() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (entry.model === "") return;
     try {
       if (
         !validateForm.every(
-          (item) => entry[item] !== "" || entry[item] !== null
+          (item) => entry[item] !== "" || entry[item] !== null || entry[item] !== 'undefined'
         )
       ) {
         alert(
-          ""
+          "fill fields"
         );
         return;
       }
@@ -61,7 +62,7 @@ function CreateCar() {
   }
 
   return (
-    <div className="container mt-2">
+    <div className="container mt-2 min-vh-100">
       <header>
 
         <h2>Create New Entry</h2>
@@ -73,7 +74,7 @@ function CreateCar() {
         </div>
 
       </header>
-      {showModal && <ImageSearch entry={entry} setEntry={setEntry} setShowModal={setShowModal}/>}
+      {showModal && <ImageSearch entry={entry} setEntry={setEntry} setShowModal={setShowModal} />}
       <form onSubmit={handleSubmit}>
         <div className="mb-1">
           <label htmlFor="make" className="form-label">Make</label>
@@ -100,7 +101,13 @@ function CreateCar() {
             value={entry.model}
             placeholder="please fill"
             name="model"
-            required />
+          />
+          {entry.model.length > 0 && (
+            <div className="form-check form-switch" style={{ float: 'right' }}>
+              <input className="form-check-input" type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Add Image from google</label>
+            </div>
+          )}
         </div>
         <div className="mb-1">
           <label htmlFor="mpg" className="form-label">mpg</label>
@@ -226,13 +233,9 @@ function CreateCar() {
             </div>
           ))}
         </div>
-        <div className="form-check form-switch" style={{ float: 'right' }}>
-          <input className="form-check-input" type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
-          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Add Image from google</label>
-        </div>
         <div className="d-flex">
-        <button type="submit" className="btn btn-primary mb-2 me-2">Submit</button>
-        <button type="click" className="btn btn-outline-primary mb-2 btn-sm" onClick={() => setEntry(dataShape)}>Reset</button>
+          <button type="submit" className="btn btn-primary mb-2 me-2">Submit</button>
+          <button type="click" className="btn btn-outline-primary mb-2 btn-sm" onClick={() => setEntry(dataShape)}>Reset</button>
         </div>
       </form>
     </div>

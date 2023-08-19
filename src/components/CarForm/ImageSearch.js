@@ -69,7 +69,7 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
                                         </div>
                                         <div className="col-md-6">
                                             <button type="submit" className="btn btn-primary mt-4">
-                                                Submit
+                                                Search
                                             </button>
                                         </div>
                                     </form>

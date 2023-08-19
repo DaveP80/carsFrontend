@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
 import NewComment from './NewComment';
-import { FormContext } from '../Context/context';
+import { CommContext } from '../Context/context';
 import { makeComment } from '../commentapi';
 
-function CommentThread({ commentz, id }) {
+function CommentThread({ commentz }) {
     const [comments, setComments] = useState(commentz);
     const [newName, setNewName] = useState('');
     const [newComment, setNewComment] = useState('');
     const [newInterested, setNewInterested] = useState(false);
-    const { count, setCount } = useContext(FormContext);
+    const { count, setCount, id } = useContext(CommContext);
 
-    const formValues = {
+    const commValues = {
         setNewName,
         setNewComment,
         newComment,
@@ -80,9 +80,9 @@ function CommentThread({ commentz, id }) {
                         </ul>
                     </>
             }
-            <FormContext.Provider value={formValues}>
+            <CommContext.Provider value={commValues}>
                 <NewComment />
-            </FormContext.Provider>
+            </CommContext.Provider>
         </div>
     );
 };

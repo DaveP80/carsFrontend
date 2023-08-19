@@ -54,6 +54,7 @@ export const carmakers = [
     "peugeot",
     "saab",
     "capri",
+    "jeep",
     "renault",
     "chrysler",
     "ford",
@@ -88,6 +89,7 @@ export const origin = ["usa", "europe", "japan"];
 export const validateForm = [
     "make",
     "model",
+    "mpg",
     "horsepower",
     "model_year",
     "origin"

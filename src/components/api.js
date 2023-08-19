@@ -1,6 +1,5 @@
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
-const API2 = process.env.REACT_APP_API_URL2;
 const API3 = process.env.REACT_APP_API_URL3;
 const API4 = process.env.REACT_APP_API_URL4;
 const ID = process.env.REACT_APP_API_CSEID;

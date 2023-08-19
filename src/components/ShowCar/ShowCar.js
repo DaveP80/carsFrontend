@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Overlay from "../../common/Overlay";
 import { fetchCarById } from "../api";
-import { CarContext, FormContext } from "../Context/context";
+import { CarContext, FormContext, CommContext } from "../Context/context";
 import { FaTrash, FaEdit, FaThumbsUp } from "react-icons/fa";
 import DeleteCar from "../DeleteCar/DeleteCar";
 import EditCar from "../EditCar/EditCar"
 import { logo } from "../../assets";
 import CommentThread from "../Comments/CommentThread";
 import "./Car.css";
+import CarForm from "../CarForm/CarForm";
 
 function ShowCar() {
   const { isLoading, setIsLoading, } =
@@ -31,9 +32,11 @@ function ShowCar() {
     selectedOptions,
     setSelectedOptions,
     setShowDel,
+  };
+  const commContextValue = {
     id,
     count,
-    setCount,
+    setCount
   };
 
   useEffect(() => {
@@ -62,8 +65,7 @@ function ShowCar() {
   };
 
   return (
-    <FormContext.Provider value={formContextValue}>
-      <Overlay isLoading={isLoading}>
+    <Overlay isLoading={isLoading}>
         <div className="container min-vh-100">
           {car.length > 0 && (<main className="">
             <div className="row">
@@ -124,7 +126,9 @@ function ShowCar() {
                     </div>
                   </div>
                 </div>
-                <CommentThread commentz={car.map((item) => { return { name: item.username, comment: item.comment, commentid: item.commentid, isinterested: item.isinterested } })} id={id} />
+                    <CommContext.Provider value={commContextValue}>
+                <CommentThread commentz={car.map((item) => { return { name: item.username, comment: item.comment, commentid: item.commentid, isinterested: item.isinterested } })} />
+                    </CommContext.Provider>
               </div>
               <div className="col-md-6 mx-auto">
                 <div className="container">
@@ -158,7 +162,24 @@ function ShowCar() {
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
                   {!showDel ? (
-                    <EditCar/>
+                    <CarForm entry={entry} setEntry={setEntry} dataShape={
+                      {
+                        make: entry.name.split(' ')[0],
+                        model: entry.name.split(' ').slice(1).length > 0 ? entry.name.split(' ').slice(1) : "",
+                        mpg: entry.mpg,
+                        cylinders: entry.cylinders,
+                        //optional
+                        displacement: entry.displacement,
+                        horsepower: entry.horsepower,
+                        weight: entry.weight,
+                        //optional
+                        acceleration: entry.acceleration,
+                        origin: entry.origin || "usa",
+                        //between 70 and 99
+                        model_year: entry.model_year,
+                        preferences: entry.preferences || { imageURL: null, color: null }
+                      }
+                    } />
                   ) : (
                     <DeleteCar car={car.name} />
                   )}
@@ -174,7 +195,6 @@ function ShowCar() {
           )}
         </div>
       </Overlay>
-    </FormContext.Provider>
   );
 }
 

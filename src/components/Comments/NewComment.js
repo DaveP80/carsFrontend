@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FormContext } from '../Context/context'
+import { CommContext } from '../Context/context'
 
 function NewComment() {
     const { setNewName,
@@ -9,7 +9,7 @@ function NewComment() {
         handleToggleInterested,
         handleAddComment,
         newInterested,
-    } = useContext(FormContext)
+    } = useContext(CommContext)
     return (
         <div className="mt-1">
             <h5>Add a Comment</h5>

@@ -79,15 +79,17 @@ export async function fetchPopularCars() {
   }
 }
 
-export async function fetchBySubstring(query) { 
+export async function fetchBySubstring(query) {
   try {
     const result = await axios.get(`${API}/cars/search`, {
       params: { q: query },
     });
     return result;
   } catch (e) {
-    console.log({ message: 'no results',
-                      err: e });
+    console.log({
+      message: 'no results',
+      err: e
+    });
   }
 }
 
@@ -103,6 +105,15 @@ export async function newEntry(entry) {
 export async function editCarInDB(body, id) {
   try {
     const result = await axios.put(`${API}/cars/${id}`, body);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+//increment count column in popularity table
+export async function updateCarPopularity(id) {
+  try {
+    const result = await axios.put(`${API3}/${id}`);
     return result;
   } catch (e) {
     console.log(e);

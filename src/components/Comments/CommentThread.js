@@ -50,11 +50,10 @@ function CommentThread({ commentz }) {
 
     return (
         <div className='mt-2'>
-            {JSON.stringify(comments)}
             {
                 !comments[0]['name'] && comments.length < 2 ?
                     (
-                        <div class="alert alert-info text-center" role="alert">
+                        <div className="alert alert-info text-center" role="alert">
                             No comments, You can be the first.
                         </div>
                     ) :

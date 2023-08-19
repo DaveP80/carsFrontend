@@ -2,7 +2,7 @@ import React from 'react'
 import "./ImageSearch.css"
 
 
-function Results({ apiData, handleImgClick, entry, }) {
+function Results({ apiData, handleImgClick, formState, }) {
 
     return (
         <div className="mt-3">
@@ -11,7 +11,7 @@ function Results({ apiData, handleImgClick, entry, }) {
                 {apiData['items'].map((result, index) => (
                     <div key={index} className="col-md-4 mb-1 d-flex justify-content-center">
                         <div
-                            className={`${entry.preferences.imageURL === result['image']['thumbnailLink']
+                            className={`${formState.preferences.imageURL === result['image']['thumbnailLink']
                                 ? 'selected-item'
                                 : ''
                                 }`}

@@ -1,35 +1,7 @@
-export function formatDate(args) {
-    const date = new Date(args);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = date.toLocaleDateString("en-US", options);
-
-    return formattedDate;
-}
-
-export function generateDates() {
-    const today = new Date();
-    const dates = [];
-    for (let i = 0; i < 90; i++) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        const formattedDate = date.toISOString().slice(0, 10);
-        dates.push(formattedDate);
-    }
-    return dates;
-}
-
 export function compareObjects(obj1, obj2) {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-    for (const key of keys1) {
-        if (obj1[key] !== obj2[key]) {
-            return false;
-        }
-    }
-    return true;
+    let a = JSON.stringify(obj1);
+    let b = JSON.stringify(obj2);
+    return a === b
 }
 //return engagement count if count greater than 1
 export function isPopular(id, data) {
@@ -86,11 +58,15 @@ export const selectColor = [
 
 export const origin = ["usa", "europe", "japan"];
 
-export const validateForm = [
-    "make",
-    "model",
-    "mpg",
-    "horsepower",
-    "model_year",
-    "origin"
-];
+export function validateForm(obj) {
+   return [
+        "make",
+        "model",
+        "mpg",
+        "horsepower",
+        "model_year",
+        "origin"
+    ].every(
+        (item) => obj[item] !== "" || obj[item] !== null || obj[item] !== 'undefined' || obj[item] !== 0
+    )
+} 

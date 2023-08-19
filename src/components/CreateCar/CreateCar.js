@@ -1,9 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { validateForm, origin, carmakers, } from "../helper";
-import { newEntry } from "../api";
+import React from "react";
 import CarForm from "../CarForm/CarForm";
-import ImageSearch from "../CarForm/ImageSearch";
+import { FormContext } from "../Context/context";
 import "./CreateCar.css";
 
 function CreateCar() {
@@ -24,7 +21,6 @@ function CreateCar() {
     model_year: 84,
     preferences: { imageURL: null, color: null }
   };
-  const [entry, setEntry] = useState(dataShape);
 
   return (
     <div className="container mt-2 min-vh-100">
@@ -34,7 +30,9 @@ function CreateCar() {
         <p>Please fill in the required fields below:</p>
         <p>Adding an image is optional:</p>
       </header>
-      <CarForm entry={entry} setEntry={setEntry} dataShape={dataShape}/>
+      <FormContext.Provider value={{ dataShape, }}>
+        <CarForm />
+      </FormContext.Provider>
     </div>
   );
 }

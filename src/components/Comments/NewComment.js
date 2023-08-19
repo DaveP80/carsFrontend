@@ -33,12 +33,13 @@ function NewComment() {
                 </div>
                 <div className="mb-2 form-check">
                     <input
+                        id="isint"
                         type="checkbox"
                         className="form-check-input"
                         checked={newInterested}
                         onChange={handleToggleInterested}
                     />
-                    <label className="form-check-label">Interested in buying?</label>
+                    <label htmlFor="isint" className="form-check-label"><span className="badge text-bg-light">Interested in buying?</span></label>
                 </div>
                 <button type="submit" className="btn btn-primary">
                     Add Comment

@@ -2,22 +2,23 @@ import React, { useState, useEffect, useContext } from "react";
 import { CarContext } from "../Context/context";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { fetchCarData } from "../api";
+import { fetchCarData, fetchPopularCars } from "../api";
+import ThumbsUp from "../ShowCar/ThumbsUp";
 import Overlay from "../../common/Overlay";
 import "./AllCars.css";
 
 function AllCars() {
+  const { isLoading, setIsLoading, logo } = useContext(CarContext)
   const navigate = useNavigate();
   const [allcars, setAllCars] = useState(null);
 
-  const { isLoading, setIsLoading } = useContext(CarContext);
-
   useEffect(() => {
     setIsLoading(true);
-    fetchCarData()
+
+    fetchPopularCars()
       .then((res) => {
         let arr = [];
-        while (arr.length < 20) {
+        while (arr.length < 16) {
           let n = Math.floor(Math.random() * res.data.length);
           if (!arr.includes(n)) arr.push(n);
         }
@@ -43,16 +44,17 @@ function AllCars() {
                     to={`/cars/${car.id}`}
                   >
                     <img
-                      src={car.preferences.imageURL}
+                      src={car.imageurl ?? logo}
                       alt={car.name}
                       height="250px"
                       width="180px"
                       className="rounded-1 "
                     ></img>
                     <p className="mt-1 fs-6">
-                      {car.model_year}
+                      {car.name}
                     </p>
                   </Link>
+                  {car.count > 1 && <ThumbsUp count={car.count} />}
                 </div>
               );
             })}

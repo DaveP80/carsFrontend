@@ -6,7 +6,7 @@ import FormOverlay from '../../common/FormOverlay';
 import { CarContext } from '../Context/context';
 import FormSpinner from '../../common/FormSpinner';
 
-function ImageSearch({ entry, setEntry, setShowModal, }) {
+function ImageSearch({ formState, handleInputChange, showModal, setShowModal, }) {
     const Results = React.lazy(() =>
         import("./Results")
     );
@@ -17,16 +17,16 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        fetchCarImage(`${entry.make} ${entry.model.trim()} ${Number(entry.model_year) < 100 ? '19' + entry.model_year.toString()
-            : entry.model_year.toString() + '00'} ${selColor}`).then(res => { setApiData(res.data); setIsLoading(false); });
+        fetchCarImage(`${formState.make} ${formState.model.trim()} ${Number(formState.model_year) < 100 ? '19' + formState.model_year.toString()
+            : formState.model_year.toString() + '00'} ${selColor}`).then(res => { setApiData(res.data); setIsLoading(false); });
     };
 
     const handleImgClick = (data) => {
-        setEntry({ ...entry, preferences: { imageURL: data['image']['thumbnailLink'], color: selColor.toLowerCase() } })
+        handleInputChange('preferences', { imageURL: data['image']['thumbnailLink'], color: selColor.toLowerCase() })
     }
 
     const handleXClick = () => {
-        setEntry({ ...entry, preferences: { imageURL: null, color: null } })
+        handleInputChange('preferences', { imageURL: null, color: null })
         setShowModal(false)
     }
     return (
@@ -35,7 +35,7 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">{`Select color for ${entry.make} ${entry.model}`}</h5>
+                            <h5 className="modal-title">{`Select color for ${formState.make} ${formState.model}`}</h5>
                             <button
                                 type="button"
                                 className="close"
@@ -83,7 +83,7 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
 
                                     {apiData.hasOwnProperty('items') && (
 
-                                        <Results apiData={apiData} handleImgClick={handleImgClick} entry={entry} />
+                                        <Results apiData={apiData} handleImgClick={handleImgClick} formState={formState} />
 
 
                                     )}
@@ -100,12 +100,17 @@ function ImageSearch({ entry, setEntry, setShowModal, }) {
                                 data-dismiss="modal"
                                 onClick={() => setShowModal(false)}
                             >
-                                {entry.preferences.imageURL ? 'Save' : 'Close'}
+                                {formState.preferences.imageURL ? 'Save' : 'Close'}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            {showModal && (
+          <div
+            className="modal-backdrop fade show"
+          ></div>
+        )}
         </>
     )
 }

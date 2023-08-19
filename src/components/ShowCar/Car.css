@@ -11,14 +11,14 @@ body {
   transform: scale(1.4);
 }
 
-.poster {
-  width: 22vw;
-  height: 29vw;
+.thumbnail {
+  width: 25vw;
+  height: 19vw;
 }
 
 @media (max-width: 700px) {
-  .poster {
-    width: 40vw;
-    height: 50vw;
+  .thumbnail {
+    width: 42vw;
+    height: 33vw;
   }
 }

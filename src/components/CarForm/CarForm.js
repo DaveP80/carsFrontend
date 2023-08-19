@@ -1,62 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateForm, carmakers, origin, } from '../helper';
 import { editCarInDB, newEntry } from '../api';
+import { FormContext } from '../Context/context';
 import ImageSearch from './ImageSearch';
 
-function CarForm({ entry, setEntry, dataShape }) {
+function CarForm() {
 
+    const { dataShape, car, setCar, setShowForm, } = useContext(FormContext);
+    const formReducer = (state, action) => {
+        switch (action.type) {
+            case 'CHANGE':
+                return {
+                    ...state,
+                    [action.field]: action.value,
+                };
+            case 'RESET':
+                return dataShape;
+            default:
+                return state;
+        }
+    };
+    const [formState, dispatch] = useReducer(formReducer, dataShape);
     const [showMore, setShowMore] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate()
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (entry.model === "") return;
-        try {
-          if (
-            !validateForm.every(
-              (item) => entry[item] !== "" || entry[item] !== null || entry[item] !== 'undefined'
-            )
-          ) {
-            alert(
-              "fill fields"
-            );
+        if (formState.model === "") return;
+        if (JSON.stringify(formState) === JSON.stringify(dataShape)) {
             return;
-          }
-          let temp = entry;
-          temp['name'] = entry.make + " " + entry.model.trim();
-          delete temp.make; delete temp.model;
-          if (temp.table) {
-          delete temp.table;
-          await newEntry(temp).then((response) => {
-            navigate(`/cars/${response.data.id}`);
-          });
-        } else { 
-        for (let n of Object.keys(entry)) {
-            if (!(n in dataShape)) {
-                delete temp[n];
-            }
-        }       
-        await editCarInDB(temp, entry.id).then(res => navigate(`/cars/${res.data.id}`))
-        .catch(e => console.log(e));
-    }
-        } catch (e) {
-          console.log(e);
         }
-      }
-
-    function handleCarInput(e) {
-        setEntry({ ...entry, [e.target.name]: e.target.value });
+        try {
+            if (
+                !validateForm(formState)
+            ) {
+                alert(
+                    "fill fields"
+                );
+                return;
+            }
+            // let formState = JSON.parse(JSON.stringify(formState));
+            formState['name'] = formState.make + " " + formState.model.trim();
+            delete formState.make; delete formState.model;
+            if (formState.table) {
+                delete formState.table;
+                await newEntry(formState).then((response) => {
+                    navigate(`/cars/${response.data.id}`);
+                });
+            } else if (formState.id) {
+                let id = formState.id
+                delete formState.id
+                await editCarInDB(formState, id).then(res => { setCar([res.data, ...car]); setShowForm(false); handleReset() })
+                    .catch(e => { console.log(e); setShowForm(false); handleReset() });
+            }
+        } catch (e) {
+            setShowForm(false); handleReset();
+        }
     }
+    const handleInputChange = (field, value) => {
+        dispatch({ type: 'CHANGE', field, value });
+    };
+
+    const handleReset = () => {
+        dispatch({ type: 'RESET' });
+        //setSubmittedValues(null);
+    };
 
     function handleSwitch() {
         setShowMore(!showMore);
         //if (!showMore) setEntry({ ...entry, displacement: 194, acceleration: 15.6 });
     }
+
     return (
         <>
-            {showModal && <ImageSearch entry={entry} setEntry={setEntry} setShowModal={setShowModal} />}
+            {showModal && <ImageSearch formState={formState} handleInputChange={handleInputChange} setShowModal={setShowModal} showModal={showModal} />}
+            {JSON.stringify(dataShape)}
+            {JSON.stringify(formState)}
             <form onSubmit={handleSubmit}>
                 <div className="form-check form-switch" style={{ float: 'right' }}>
                     <input className="form-check-input" type="checkbox" role="switch" checked={showMore} onChange={handleSwitch} id="flexSwitchCheckDefault" />
@@ -67,9 +88,8 @@ function CarForm({ entry, setEntry, dataShape }) {
                     <select
                         className="form-control"
                         id="make"
-                        name="make"
-                        value={entry.make}
-                        onChange={handleCarInput}
+                        value={formState.make}
+                        onChange={(e) => handleInputChange('make', e.target.value)}
                     >
                         {carmakers.sort().map((item, i) => {
                             return (
@@ -83,12 +103,11 @@ function CarForm({ entry, setEntry, dataShape }) {
                 <div className="mb-1">
                     <label htmlFor="model" className="form-label">Model</label>
                     <input type="text" className="form-control" id="model"
-                        onChange={handleCarInput}
-                        value={entry.model}
+                        onChange={(e) => handleInputChange('model', e.target.value)}
+                        value={formState.model}
                         placeholder="please fill"
-                        name="model"
                     />
-                    {entry.model.length > 0 && (
+                    {formState.model.length > 0 && (
                         <div className="form-check form-switch" style={{ float: 'right' }}>
                             <input className="form-check-input" type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Add Image from google</label>
@@ -103,11 +122,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                         step="0.10"
                         min="9"
                         max="47"
-                        name="mpg"
                         id="mpg"
                         className="form-control"
-                        onChange={handleCarInput}
-                        value={entry.mpg}
+                        onChange={(e) => handleInputChange('mpg', e.target.value)}
+                        value={formState.mpg}
                     />
                 </div>
                 <div className="mb-1">
@@ -117,11 +135,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                         step="1"
                         min="4"
                         max="8"
-                        name="cylinders"
                         id="cyl"
                         className="form-control"
-                        onChange={handleCarInput}
-                        value={entry.cylinders}
+                        onChange={(e) => handleInputChange('cylinders', e.target.value)}
+                        value={formState.cylinders}
                     />
                 </div>
                 {showMore &&
@@ -132,11 +149,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                             step="1"
                             min="68"
                             max="455"
-                            name="displacement"
                             id="disp"
                             className="form-control"
-                            onChange={handleCarInput}
-                            value={entry.displacement}
+                            onChange={(e) => handleInputChange('displacement', e.target.value)}
+                            value={formState.displacement}
                         />
                     </div>
                 }
@@ -147,11 +163,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                         step="1"
                         min="46"
                         max="280"
-                        name="horsepower"
                         id="hp"
                         className="form-control"
-                        onChange={handleCarInput}
-                        value={entry.horsepower}
+                        onChange={(e) => handleInputChange('horsepower', e.target.value)}
+                        value={formState.horsepower}
                     />
                 </div>
                 <div className="mb-1">
@@ -161,11 +176,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                         step="1"
                         min="1600"
                         max="5200"
-                        name="weight"
                         id="wt"
                         className="form-control"
-                        onChange={handleCarInput}
-                        value={entry.weight}
+                        onChange={(e) => handleInputChange('weight', e.target.value)}
+                        value={formState.weight}
                     />
                 </div>
                 {showMore &&
@@ -176,11 +190,10 @@ function CarForm({ entry, setEntry, dataShape }) {
                             step=".10"
                             min="8"
                             max="25"
-                            name="acceleration"
                             id="acc"
                             className="form-control"
-                            onChange={handleCarInput}
-                            value={entry.acceleration}
+                            onChange={(e) => handleInputChange('acceleration', e.target.value)}
+                            value={formState.acceleration}
                         />
                     </div>
                 }
@@ -189,9 +202,8 @@ function CarForm({ entry, setEntry, dataShape }) {
                     <select
                         className="form-control"
                         id="m-year"
-                        name="model_year"
-                        value={entry.model_year}
-                        onChange={handleCarInput}
+                        value={formState.model_year}
+                        onChange={(e) => handleInputChange('model_year', e.target.value)}
                     >
                         {Array.from({ length: 100 - 70 + 1 }, (_, index) => 70 + index).reverse().map((item, i) => {
                             return (
@@ -211,17 +223,16 @@ function CarForm({ entry, setEntry, dataShape }) {
                                 className="form-check-input"
                                 id={region}
                                 value={region}
-                                name="origin"
-                                checked={entry.origin === region}
-                                onChange={handleCarInput}
+                                checked={formState.origin === region}
+                                onChange={(e) => handleInputChange('origin', e.target.value)}
                             />
                             <label className="form-check-label mx-1" htmlFor={region}>{region}</label>
                         </div>
                     ))}
                 </div>
                 <div className="d-flex">
-                    <button type="submit" className="btn btn-primary mb-2 me-2">Submit</button>
-                    <button type="click" className="btn btn-outline-primary mb-2 btn-sm" onClick={() => setEntry(dataShape)}>Reset</button>
+                    <button type="submit" id="formcreate" className="btn btn-primary mb-2 me-2">Submit</button>
+                    <button type="button" name="resetform" className="btn btn-outline-primary mb-2 btn-sm" onClick={handleReset}>Reset</button>
                 </div>
             </form>
         </>

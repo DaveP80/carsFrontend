@@ -11,8 +11,8 @@ function NewComment() {
         newInterested,
     } = useContext(CommContext)
     return (
-        <div className="mt-1">
-            <h5>Add a Comment</h5>
+        <div className="">
+            <h4><span class="badge bg-secondary">Add a Comment</span></h4>
             <form onSubmit={handleAddComment}>
                 <div className="mb-2">
                     <input

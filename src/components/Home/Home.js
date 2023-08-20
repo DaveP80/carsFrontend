@@ -1,36 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { logo } from "../../assets";
-import { useNavigate } from "react-router-dom";
+import { giflogo } from "../../assets";
 import "./Home.css";
 
 function Home() {
-  const navigate = useNavigate();
+  const handleInterestedClick = () => {
+    document.getElementById("searchbar").focus()
+  };
 
   return (
-    <div className="container-fluid min-vh-100">
-      <div className="mt-5 text-center">
-        <div className="py-5 text-center">
-          <img className="img-fluid" src={logo} alt="main logo" />
+    <div className="container-fluid home-parent">
+      <div className="container pb-5 home-container">
+        <div className="py-5 d-flex justify-content-center">
+          <img className="img-fluid rounded img-width-md-50 img-width-sm-80" src={giflogo} alt="main logo" />
         </div>
-        <div className="w-50 text-center mx-auto">
-          <h4 className="text-warning">
-            Class Car database and comment on your favorite car.
+        <div className="w-50 mx-auto rounded text-center home-text">
+          <h4 className="text-dark">
+            Classic Car database and comment on your favorite car.
           </h4>
-          <h4 className="text-warning">
-            Search for cars by make an model.
-            <Link className="" to="/cars">
+          <h4 className="text-dark">
+            View some popular cars according to users.
+            <Link className="text-primary" to="/cars">
               here
             </Link>{" "}
           </h4>
-          <h4 className="text-warning">
-            Find a car you are really interested in.
+          <h4 className="text-dark">
+            Find a car you are really{' '}
+            <span
+              style={{ cursor: 'pointer' }}
+              className="text-primary"
+              onClick={handleInterestedClick}
+            >
+              interested in
+            </span>
+            .
           </h4>
         </div>
+
       </div>
-      <div>
     </div>
-    </div>
+
   );
 }
 

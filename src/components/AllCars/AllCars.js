@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { CarContext } from "../Context/context";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { fetchCarData, fetchPopularCars } from "../api";
+import { fetchPopularCars } from "../api";
 import ThumbsUp from "../ShowCar/ThumbsUp";
 import Overlay from "../../common/Overlay";
 import "./AllCars.css";
 
 function AllCars() {
-  const { isLoading, setIsLoading, logo } = useContext(CarContext)
+  const { isLoading, setIsLoading, carImage } = useContext(CarContext)
   const navigate = useNavigate();
   const [allcars, setAllCars] = useState(null);
 
@@ -30,36 +30,47 @@ function AllCars() {
 
   return (
     <Overlay isLoading={isLoading}>
-      <div className="container min-vh-100">
-        <section className="row text-center">
-          {allcars &&
-            allcars.map((car) => {
-              return (
-                <div
-                  key={car.id}
-                  className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
-                >
-                  <Link
-                    className="link-underline link-underline-opacity-0 text-warning"
-                    to={`/cars/${car.id}`}
-                  >
-                    <img
-                      src={car.imageurl ?? logo}
-                      alt={car.name}
-                      height="250px"
-                      width="180px"
-                      className="rounded-1 "
-                    ></img>
-                    <p className="mt-1 fs-6">
-                      {car.name}
-                    </p>
-                  </Link>
-                  {car.count > 1 && <ThumbsUp count={car.count} />}
-                </div>
-              );
-            })}
-        </section>
-      </div>
+      <div className="min-vh-100 allcars">
+      <div className="container py-2 car-grid">
+      <div className="object-fit-none border rounded header">
+    <h1 className="display-5">Some Popular Classics</h1>
+  </div>
+  <main className="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-3">
+    {allcars &&
+      allcars.map((car) => {
+        return (
+          <div className="container">
+
+          <div
+            key={car.id}
+            className="col mb-4 sm-mb-2 d-flex flex-column align-items-center text-center bg-light rounded p-3 shadow-sm car-card"
+          >
+            <Link
+              className="text-warning"
+              to={`/cars/${car.id}`}
+              style={{textDecoration: "none"}}
+            >
+              <img
+                src={car.imageurl ?? carImage()}
+                alt={car.name}
+                height="250px"
+                width="180px"
+                className="rounded-1"
+              ></img>
+              <aside>
+              <span class="badge text-bg-primary mt-1">{car.name}</span>
+              </aside>
+            </Link>
+            <ThumbsUp count={car.count} id={car.id} />
+          </div>
+
+          </div>
+        );
+      })}
+  </main>
+</div>
+</div>
+
     </Overlay>
   );
 }

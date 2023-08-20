@@ -65,19 +65,16 @@ function CarForm() {
 
     const handleReset = () => {
         dispatch({ type: 'RESET' });
-        //setSubmittedValues(null);
+        if (formState.table || formState.id) document.getElementById("model").focus();
     };
 
     function handleSwitch() {
         setShowMore(!showMore);
-        //if (!showMore) setEntry({ ...entry, displacement: 194, acceleration: 15.6 });
     }
 
     return (
         <>
             {showModal && <ImageSearch formState={formState} handleInputChange={handleInputChange} setShowModal={setShowModal} showModal={showModal} />}
-            {JSON.stringify(dataShape)}
-            {JSON.stringify(formState)}
             <form onSubmit={handleSubmit}>
                 <div className="form-check form-switch" style={{ float: 'right' }}>
                     <input className="form-check-input" type="checkbox" role="switch" checked={showMore} onChange={handleSwitch} id="flexSwitchCheckDefault" />
@@ -109,7 +106,7 @@ function CarForm() {
                     />
                     {formState.model.length > 0 && (
                         <div className="form-check form-switch" style={{ float: 'right' }}>
-                            <input className="form-check-input" type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
+                            <input className={`form-check-input ${showModal ? 'bg-success' : 'bg-warning'}`} type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Add Image from google</label>
                         </div>
                     )}

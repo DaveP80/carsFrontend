@@ -1,3 +1,16 @@
+import { classic1, classic2, classic3, classic4 } from "../assets";
+
+export function carImage() {
+    function getRandomElementFromArray(array) {
+        if (array.length === 0) {
+            return null;
+        }
+        const randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
+    }
+    return getRandomElementFromArray([classic1, classic2, classic3, classic4]);
+}
+
 export function compareObjects(obj1, obj2) {
     let a = JSON.stringify(obj1);
     let b = JSON.stringify(obj2);

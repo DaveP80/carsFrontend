@@ -1,19 +1,47 @@
-html,
-body {
-  background-color: #495057;
+.edit-icon:hover {
+  transform: scale(1.4);
 }
 
 .delete-icon:hover {
   transform: scale(1.4);
 }
 
-.edit-icon:hover {
-  transform: scale(1.4);
+.thumbnail {
+  width: 21vw;
+  height: 15vw;
 }
 
-.thumbnail {
-  width: 25vw;
-  height: 19vw;
+.iconcolors {
+  background-color: steelblue;
+}
+
+@media screen and (max-width: 500px) {
+  .showcar-interest {
+    font-size: large;
+  }
+}
+
+.showcar {
+  background: rgb(92, 37, 25);
+  background: radial-gradient(circle, rgba(92, 37, 25, 1) 0%, rgba(159, 128, 6, 0.9570203081232493) 100%);
+}
+
+.showcar-grid {
+  background: linear-gradient(204deg,#a56fbf,#105309,#fa7a2b);
+  background-size: 180% 180%;
+  animation: gradient-animation 12s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @media (max-width: 700px) {
@@ -21,4 +49,13 @@ body {
     width: 42vw;
     height: 33vw;
   }
+}
+
+.shadow-border {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  padding: 1em;
+  background: rgb(225,226,226);
+background: radial-gradient(circle, rgba(225,226,226,1) 0%, rgba(200,232,203,0.9570203081232493) 100%);
+border-radius: 1em;
 }

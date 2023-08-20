@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CarForm from "../CarForm/CarForm";
 import { FormContext } from "../Context/context";
 import "./CreateCar.css";
@@ -22,17 +22,27 @@ function CreateCar() {
     preferences: { imageURL: null, color: null }
   };
 
+  useEffect(() => {
+    document.getElementById("model").focus();
+  }, [])
+  
   return (
-    <div className="container mt-2 min-vh-100">
-      <header>
+    <div className="min-vh-100 create-car">
+      <div className="container p-4">
+        <div className="border border-dark rounded bg-gradient p-4">
 
-        <h2>Create New Entry</h2>
-        <p>Please fill in the required fields below:</p>
-        <p>Adding an image is optional:</p>
-      </header>
-      <FormContext.Provider value={{ dataShape, }}>
-        <CarForm />
-      </FormContext.Provider>
+
+          <header>
+
+            <h2>Create New Entry</h2>
+            <p>Please fill in the required fields below:</p>
+            <p>Adding an image is optional:</p>
+          </header>
+          <FormContext.Provider value={{ dataShape, }}>
+            <CarForm />
+          </FormContext.Provider>
+        </div>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import "./Car.css";
 import CarForm from "../CarForm/CarForm";
 
 function ShowCar() {
-  const { isLoading, setIsLoading, logo } =
+  const { isLoading, setIsLoading, carImage } =
     useContext(CarContext);
   const { id } = useParams();
   const [car, setCar] = useState([]);
@@ -34,6 +34,8 @@ function ShowCar() {
     setCar,
     setShowForm,
     id,
+    showDel,
+    setShowDel,
   }
 
   useEffect(() => {
@@ -81,132 +83,142 @@ function ShowCar() {
 
   return (
     <Overlay isLoading={isLoading}>
-      <div className="container min-vh-100">
-        {car.length > 0 && (
-        <main className="">
-          <div className="row">
-            <div className="col-md-6">
-              <h1 className="text-warning">
-                {car[0].name}
-              </h1>
-              <h5 className="text-warning">
-                <span className="fw-bolder">Model Year</span>:{" "}
-                {+car[0].model_year === 20 ? 2000 : '19' + car[0].model_year}
-              </h5>
-              <h5 className="text-warning">
-                <span className="fw-bolder">horsepower</span>:{" "}
-                {car[0].horsepower ?? '135'}
-              </h5>
-              <h5 className="text-warning">
-                <span className="fw-bolder">mpg</span>:{" "}
-                {car[0].mpg ?? 'N/A'}
-              </h5>
-              <h6 className="text-warning">
-                <span className="fw-bolder">weight</span>:{" "}
-                {car[0].weight ?? '2000'}lbs
-              </h6>
-              <h6 className="text-warning">
-                <span className="fw-bolder">origin </span>:{" "}
-                {car[0].origin}
-              </h6>
-              {count > 1 && (
-                <ThumbsUp count={count}/>
-              )}
-              <div className="container mb-1 mt-1">
-                <div className="row">
+      <div className="min-vh-100 showcar">
+        <main className="container py-5">
+          {car.length > 0 && (
+            <section className="container py-4 rounded showcar-grid">
+              <div className="row row-cols-1 row-cols-md-2">
+                <div className="col-md-7">
+                  <div className="shadow-border">
 
-                  <div className="col-md-auto">
-                    <span>Edit Car Info</span>
+                    <h1 className="text-dark">
+                      {car[0].name}
+                    </h1>
+                    <h5 className="text-secondary">
+                      <span className="fw-bolder">Model Year</span>:{" "}
+                      {+car[0].model_year === 20 ? 2000 : '19' + car[0].model_year}
+                    </h5>
+                    <h5 className="text-secondary">
+                      <span className="fw-bolder">horsepower</span>:{" "}
+                      {car[0].horsepower ?? '135'}
+                    </h5>
+                    <h5 className="text-secondary">
+                      <span className="fw-bolder">mpg</span>:{" "}
+                      {car[0].mpg ?? 'N/A'}
+                    </h5>
+                    <h6 className="text-secondary">
+                      <span className="fw-bolder">weight</span>:{" "}
+                      {car[0].weight ?? '2000'}lbs
+                    </h6>
+                    <h6 className="text-secondary">
+                      <span className="fw-bolder">origin </span>:{" "}
+                      {car[0].origin}
+                    </h6>
                   </div>
-                  <div className="col-md-1">
-                    <div onClick={handleClickEdit} className="">
-                      <FaEdit className="icon edit-icon text-white" />
+                  <h3 className="h3 fs-md-4 fs-lg-3 mt-1 showcar-interest">
+                    <span class="badge text-bg-light">
+                      {count > 1 && (
+                        <ThumbsUp count={count} />
+                      )}
+                    </span>
+                  </h3>
+                  <div>
+
+                  </div>
+                  <div className="d-inline-flex mt-1 mb-1 rounded iconcolors">
+                    <div className="col-auto">
+                      <span className="">Edit Car Info</span>
+                    </div>
+                    <div className="col-auto cursor-pointer">
+                      <div onClick={handleClickEdit} className="mx-2">
+                        <FaEdit className="icon edit-icon text-white" />
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div onClick={handleClickTrash} className="mx-2">
+                        <FaTrash className="icon delete-icon text-danger" />
+                      </div>
                     </div>
                   </div>
-                  <div className="col-md-1">
-                    <div onClick={handleClickTrash} className="pointer-cursor">
-                      <FaTrash className="icon delete-icon text-danger" />
+
+                  <CommContext.Provider value={commContextValue}>
+                    <CommentThread commentz={car.map((item) => { return { name: item.username, comment: item.comment, commentid: item.commentid, isinterested: item.isinterested } })} />
+                  </CommContext.Provider>
+                </div>
+                <div className="col-md-5">
+                  <div className="container d-flex align-items-center justify-content-center mt-5">
+                    <div className="">
+                      <img
+                        src={
+                          car[0].preferences.imageURL
+                            ? car[0].preferences.imageURL
+                            : carImage()
+                        }
+                        alt={car[0].name}
+                        className="thumbnail img-fluid rounded-1 text-align-center"
+                      />
+
+                      <div className="mt-1 text-secondary text-center">
+                        {!car[0].preferences.imageURL ? 'stock image' : 'image from google'}
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
-              <CommContext.Provider value={commContextValue}>
-                <CommentThread commentz={car.map((item) => { return { name: item.username, comment: item.comment, commentid: item.commentid, isinterested: item.isinterested } })} />
-              </CommContext.Provider>
-            </div>
-            <div className="col-md-6 mx-auto">
-  <div className="container d-flex align-items-center justify-content-center mt-5">
-    <div className="text-center">
-      <img
-        src={
-          car[0].preferences.imageURL
-            ? car[0].preferences.imageURL
-            : logo
-        }
-        alt={car[0].name}
-        className="thumbnail img-fluid rounded-1 text-align-center"
-      />
 
-      <div className="mt-1 text-secondary">
-        image from google
-      </div>
-    </div>
-  </div>
-</div>
+            </section>
+          )}
 
-          </div>
+          <FormContext.Provider value={crudFormValues}>
+
+            {showForm && (
+              <div
+                className="modal"
+                tabIndex="-1"
+                role="dialog"
+                style={{ display: "block" }}
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    {!showDel ? (
+                      <>
+                        <div className="modal-header">
+                          <h5 className="modal-title">Edit Car</h5>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            onClick={handleCloseModal}
+                          ></button>
+                        </div>
+                        <div className="modal-body">
+                          <CarForm />
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            id="closemodal"
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={handleCloseModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <DeleteCar name={car[0].name} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </FormContext.Provider>
+          {showForm && (
+            <div
+              className="modal-backdrop fade show"
+            ></div>
+          )}
         </main>
-
-        )}
-        <FormContext.Provider value={crudFormValues}>
-          
-        {showForm && (
-          <div
-            className="modal"
-            tabIndex="-1"
-            role="dialog"
-            style={{ display: "block" }}
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                {!showDel ? (
-                  <>
-
-                    <div className="modal-header">
-                      <h5 className="modal-title">Edit Car</h5>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        onClick={handleCloseModal}
-                      ></button>
-                    </div>
-                    <div className="modal-body">
-                      <CarForm />
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        id="closemodal"
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={handleCloseModal}
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <DeleteCar name={car} />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-        </FormContext.Provider>
-        {showForm && (
-          <div
-            className="modal-backdrop fade show"
-          ></div>
-        )}
       </div>
     </Overlay>
   );

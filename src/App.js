@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import { CarContext } from "./components/Context/context";
 import CreateCar from "./components/CreateCar/CreateCar";
 import Spinner from "./common/Spinner";
-import { logo } from "./assets";
+import { carImage } from "./components/helper";
 import "./App.css";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   const carContextValue = {
     isLoading,
     setIsLoading,
-    logo,
+    carImage,
   };
 
   return (

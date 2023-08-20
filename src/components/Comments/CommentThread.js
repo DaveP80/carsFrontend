@@ -74,7 +74,7 @@ function CommentThread({ commentz }) {
 
                                             }
                                         </div>
-                                    </li>
+                                    </li>;
                             })}
                         </ul>
                     </>

@@ -35,6 +35,7 @@ function SearchBar({ searchArr }) {
     <div>
       <form onSubmit={handleSubmit} className="d-flex">
         <input
+          id="searchbar"
           type="text"
           value={searchText}
           onChange={handleInputChange}

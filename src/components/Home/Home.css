@@ -1,4 +1,14 @@
-html,
-body {
-  background-color: #b6897f;
+.home-parent {
+  background: rgb(233,238,174);
+background: radial-gradient(circle, rgba(233,238,174,1) 0%, rgba(148,233,171,0.9570203081232493) 100%);
+}
+
+.home-container {
+  background: rgb(174,196,238);
+background: linear-gradient(180deg, rgba(174,196,238,1) 0%, rgba(81,150,219,0.9570203081232493) 100%);
+}
+
+.home-text {
+  background: rgb(81,255,178);
+  background: linear-gradient(180deg, rgba(81,255,178,1) 0%, rgba(136,232,113,0.9570203081232493) 100%);
 }

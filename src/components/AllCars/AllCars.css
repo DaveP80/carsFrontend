@@ -1,4 +1,21 @@
-body,
-html {
-  background-color: #495057;
+.allcars {
+  background-color: lightblue;
+}
+
+.car-grid {
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 74%);
+}
+
+.header {
+  background-color: #93aecb;
+  box-shadow: 0px 10px 10px rgba(28, 30, 32, 0.1);
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.car-card:hover {
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(202,214,251,1) 0%, rgba(0,212,255,1) 48%);
 }

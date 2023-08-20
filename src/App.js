@@ -6,7 +6,6 @@ import { CarContext } from "./components/Context/context";
 import CreateCar from "./components/CreateCar/CreateCar";
 import Spinner from "./common/Spinner";
 import { carImage } from "./components/helper";
-import "./App.css";
 
 function App() {
   const AllCars = React.lazy(() => import("./components/AllCars/AllCars"));

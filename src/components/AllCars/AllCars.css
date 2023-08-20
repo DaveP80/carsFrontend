@@ -3,8 +3,13 @@
 }
 
 .car-grid {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 74%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 0%,
+    rgba(0, 212, 255, 1) 74%
+  );
 }
 
 .header {
@@ -16,6 +21,11 @@
 }
 
 .car-card:hover {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(202,214,251,1) 0%, rgba(0,212,255,1) 48%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(202, 214, 251, 1) 0%,
+    rgba(0, 212, 255, 1) 48%
+  );
 }

@@ -9,7 +9,7 @@ function NewComment() {
         handleToggleInterested,
         handleAddComment,
         newInterested,
-    } = useContext(CommContext)
+    } = useContext(CommContext);
     return (
         <div className="">
             <h4><span class="badge bg-secondary">Add a Comment</span></h4>
@@ -44,8 +44,6 @@ function NewComment() {
                 <button type="submit" className="btn btn-primary">
                     Add Comment
                 </button>
-
-
             </form>
         </div>
     )

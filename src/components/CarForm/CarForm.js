@@ -83,7 +83,7 @@ function CarForm() {
                 <div className="mb-1">
                     <label htmlFor="make" className="form-label">Make</label>
                     <select
-                        className="form-control"
+                        className="form-control shadow-sm"
                         id="make"
                         value={formState.make}
                         onChange={(e) => handleInputChange('make', e.target.value)}
@@ -99,7 +99,7 @@ function CarForm() {
                 </div>
                 <div className="mb-1">
                     <label htmlFor="model" className="form-label">Model</label>
-                    <input type="text" className="form-control" id="model"
+                    <input type="text" className="form-control shadow-sm" id="model"
                         onChange={(e) => handleInputChange('model', e.target.value)}
                         value={formState.model}
                         placeholder="please fill"
@@ -120,7 +120,7 @@ function CarForm() {
                         min="9"
                         max="47"
                         id="mpg"
-                        className="form-control"
+                        className="form-control shadow-sm"
                         onChange={(e) => handleInputChange('mpg', e.target.value)}
                         value={formState.mpg}
                     />
@@ -133,7 +133,7 @@ function CarForm() {
                         min="4"
                         max="8"
                         id="cyl"
-                        className="form-control"
+                        className="form-control shadow-sm"
                         onChange={(e) => handleInputChange('cylinders', e.target.value)}
                         value={formState.cylinders}
                     />
@@ -147,7 +147,7 @@ function CarForm() {
                             min="68"
                             max="455"
                             id="disp"
-                            className="form-control"
+                            className="form-control shadow-sm"
                             onChange={(e) => handleInputChange('displacement', e.target.value)}
                             value={formState.displacement}
                         />
@@ -161,7 +161,7 @@ function CarForm() {
                         min="46"
                         max="280"
                         id="hp"
-                        className="form-control"
+                        className="form-control shadow-sm"
                         onChange={(e) => handleInputChange('horsepower', e.target.value)}
                         value={formState.horsepower}
                     />
@@ -174,7 +174,7 @@ function CarForm() {
                         min="1600"
                         max="5200"
                         id="wt"
-                        className="form-control"
+                        className="form-control shadow-sm"
                         onChange={(e) => handleInputChange('weight', e.target.value)}
                         value={formState.weight}
                     />
@@ -188,7 +188,7 @@ function CarForm() {
                             min="8"
                             max="25"
                             id="acc"
-                            className="form-control"
+                            className="form-control shadow-sm"
                             onChange={(e) => handleInputChange('acceleration', e.target.value)}
                             value={formState.acceleration}
                         />
@@ -197,7 +197,7 @@ function CarForm() {
                 <div className="mb-1">
                     <label htmlFor="m-year" className="form-label">model year</label>
                     <select
-                        className="form-control"
+                        className="form-control shadow-sm"
                         id="m-year"
                         value={formState.model_year}
                         onChange={(e) => handleInputChange('model_year', e.target.value)}

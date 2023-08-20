@@ -25,11 +25,11 @@ function CreateCar() {
   useEffect(() => {
     document.getElementById("model").focus();
   }, [])
-  
+
   return (
     <div className="min-vh-100 create-car">
       <div className="container p-4">
-        <div className="border border-dark rounded bg-gradient p-4">
+        <div className="border border-dark rounded shadow bg-gradient p-4">
 
 
           <header>

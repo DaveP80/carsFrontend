@@ -84,9 +84,9 @@ function ShowCar() {
   return (
     <Overlay isLoading={isLoading}>
       <div className="min-vh-100 showcar">
-        <main className="container py-5">
+        <main className="container pt-4 pb-2">
           {car.length > 0 && (
-            <section className="container py-4 rounded showcar-grid">
+            <section className="container py-4 shadow rounded showcar-grid">
               <div className="row row-cols-1 row-cols-md-2">
                 <div className="col-md-7">
                   <div className="shadow-border">
@@ -219,6 +219,22 @@ function ShowCar() {
             ></div>
           )}
         </main>
+        <div class="container">
+  <div class="carAnimation shadow-lg">
+    <div class="road"></div>
+    <div class="car">
+      <div class="colour"></div>
+      <div class="windows"></div>
+      <div class="leftWheel">
+        <div class="wheel"></div>
+      </div>
+      <div class="rightWheel">
+        <div class="wheel"></div>
+      </div>
+    </div>
+    <div class="clouds"></div>
+  </div>
+</div>
       </div>
     </Overlay>
   );

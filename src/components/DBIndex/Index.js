@@ -3,6 +3,7 @@ import Overlay from "../../common/Overlay";
 import { CarContext } from "../Context/context";
 import { fetchIndexData, fetchIndexDataDesc } from "../api";
 import { updown } from "../../assets";
+import "./DIndex.css"
 
 function Index() {
   const { isLoading, setIsLoading } = useContext(CarContext);
@@ -15,15 +16,15 @@ function Index() {
     if (order) {
       fetchIndexDataDesc()
         .then((res) => {
-          setIsLoading(false);
           setCars(res.data);
+          setIsLoading(false);
         })
         .catch((e) => setnoResult(true));
     } else {
       fetchIndexData()
         .then((res) => {
-          setIsLoading(false);
           setCars(res.data);
+          setIsLoading(false);
         })
         .catch((e) => setnoResult(true));
     }
@@ -31,13 +32,15 @@ function Index() {
 
   return (
     <Overlay isLoading={isLoading}>
-      <div className="container pt-2">
+      <div className="container-fluid pt-2 gradient-background">
         {cars && (
           <>
-            <h3 className="text-warning text-center">Classic Car DB</h3>
+                <div className="object-fit-none border rounded indexheader">
+    <h2 className="display-5 text-light">Classic car db</h2>
+  </div>
 
             <div className="table-responsive">
-              <table className="table table-bordered">
+              <table className="table table-bordered mt-2 shadow-lg">
                 <thead>
                   <tr>
                     <th>

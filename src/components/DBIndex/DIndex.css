@@ -1,0 +1,37 @@
+.indexheader {
+    background-color: #4b6761;
+    box-shadow: 0px 10px 10px rgba(28, 30, 32, 0.1);
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0 1em;
+  }
+
+.gradient-background {
+    background: linear-gradient(118deg,#cc1d45,#1bdf54,#f7e9a1,#566ea5,#5a4d05);
+    background-size: 300% 300%;
+    animation: gradient-animation 45s ease infinite;
+  }
+  
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    .table-responsive {
+      padding: 0 40px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .table-responsive {
+      padding: 0 0px;
+    }
+  }

@@ -28,7 +28,7 @@
 }
 
 .showcar-grid {
-  background: linear-gradient(204deg,#a56fbf,#105309,#fa7a2b);
+  background: linear-gradient(204deg, #a56fbf, #105309, #fa7a2b);
   background-size: 180% 180%;
   animation: gradient-animation 12s ease infinite;
 }
@@ -37,9 +37,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -56,9 +58,9 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   padding: 1em;
-  background: rgb(225,226,226);
-background: radial-gradient(circle, rgba(225,226,226,1) 0%, rgba(200,232,203,0.9570203081232493) 100%);
-border-radius: 1em;
+  background: rgb(225, 226, 226);
+  background: radial-gradient(circle, rgba(225, 226, 226, 1) 0%, rgba(200, 232, 203, 0.9570203081232493) 100%);
+  border-radius: 1em;
 }
 
 .carAnimation {
@@ -67,205 +69,216 @@ border-radius: 1em;
   width: 300px;
   height: 300px;
   background-color: #83c5be;
-  border-radius:50%;
+  border-radius: 50%;
   margin: 0 auto;
 }
 
 .road {
   position: absolute;
   background-color: #333;
-  border-radius:20px;
-  height:5px;
-  width:220px;
-  top:220px;
-  left:40px;
-  overflow:hidden;
+  border-radius: 20px;
+  height: 5px;
+  width: 220px;
+  top: 220px;
+  left: 40px;
+  overflow: hidden;
 }
 
 .road:before {
-  content:"";
+  content: "";
   position: absolute;
   background-color: #83c5be;
-  width:30px;
-  height:5px;
-  border-radius:5px; 
+  width: 30px;
+  height: 5px;
+  border-radius: 5px;
   animation: move 1s linear infinite reverse;
 }
 
-@keyframes move {  
-  from { left: -100px; }
-    to { left: 200px; }
+@keyframes move {
+  from {
+    left: -100px;
+  }
+
+  to {
+    left: 200px;
+  }
 }
 
 .road:after {
-  content:"";
+  content: "";
   position: absolute;
-  width:15px;
-  height:5px;
+  width: 15px;
+  height: 5px;
   background-color: #333;
-  border-radius:5px; 
+  border-radius: 5px;
   box-shadow: 27px 0 #333;
   animation: move 1s linear infinite reverse;
 }
 
 .car {
   position: absolute;
-  height:0;
-  width:90px;
+  height: 0;
+  width: 90px;
   border-right: 25px solid transparent;
   border-left: 20px solid transparent;
   border-bottom: 70px solid #333;
-  z-index:2;
-  top:140px;
-  left:75px;  
+  z-index: 2;
+  top: 140px;
+  left: 75px;
 }
 
 .car:before {
-  content:"";
+  content: "";
   position: absolute;
   background-color: #333;
-  width:70px;
-  height:40px;
-  left:60px;
-  top:30px;
+  width: 70px;
+  height: 40px;
+  left: 60px;
+  top: 30px;
 }
 
 .car:after {
-  content:"";
-  position: absolute; 
+  content: "";
+  position: absolute;
   background-color: #333;
-  width:10px;
-  height:35px;
-  border-radius:10px;
-  left:-22px;
-  top:20px;
+  width: 10px;
+  height: 35px;
+  border-radius: 10px;
+  left: -22px;
+  top: 20px;
   transform: rotate(16deg);
 }
 
 .colour {
   position: absolute;
-  height:0;
-  width:80px;
+  height: 0;
+  width: 80px;
   border-right: 20px solid transparent;
   border-left: 17.5px solid transparent;
   border-bottom: 60px solid #e5383b;
-  top:5px;
-  left:-12px;
+  top: 5px;
+  left: -12px;
 }
 
 .colour:before {
-  content:"";
-  position: absolute; 
+  content: "";
+  position: absolute;
   background-color: #e5383b;
-  width:60px;
-  height:30px;
-  left:60px;
-  top:30px;
+  width: 60px;
+  height: 30px;
+  left: 60px;
+  top: 30px;
 }
 
 .colour:after {
   position: absolute;
-  content:"";
+  content: "";
   background-color: #f9c74f;
-  width:5px;
-  height:15px;
+  width: 5px;
+  height: 15px;
   border: 3px solid #333;
-  left:122px;
-  top:44px;
+  left: 122px;
+  top: 44px;
   box-shadow: 0px -19px #333;
 }
 
 .windows {
-  position: absolute; 
-  height:0;
-  width:70px;
+  position: absolute;
+  height: 0;
+  width: 70px;
   border-right: 7px solid transparent;
   border-left: 7px solid transparent;
   border-bottom: 28px solid #333;
-  top:8px;
-  left:4px;
+  top: 8px;
+  left: 4px;
 }
 
 .windows:before {
-  content:"";
+  content: "";
   position: absolute;
-  height:0;
-  width:65px;
+  height: 0;
+  width: 65px;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
   border-bottom: 22px solid #aed9e0;
-  top:3px;
-  left:-2.5px;
+  top: 3px;
+  left: -2.5px;
 }
 
 .windows:after {
-  content:"";
+  content: "";
   position: absolute;
-  width:5px;
-  height:25px;
+  width: 5px;
+  height: 25px;
   background-color: #333;
-  left:45px;
+  left: 45px;
   box-shadow: -25px 0 #333;
 }
 
 .leftWheel {
   position: absolute;
-  width:35px;
-  height:15px;
+  width: 35px;
+  height: 15px;
   border: 3px solid #333;
   background-color: #d3d3d3;
   border-radius: 30px 30px 0 0;
-  top:47px;
-  left:-5px;
+  top: 47px;
+  left: -5px;
 }
 
 .rightWheel {
   position: absolute;
-  width:35px;
-  height:15px;
+  width: 35px;
+  height: 15px;
   border: 3px solid #333;
   background-color: #d3d3d3;
   border-radius: 30px 30px 0 0;
-  top:47px;
-  left:75px;
+  top: 47px;
+  left: 75px;
 }
 
 .wheel {
   position: absolute;
-  border-radius:50%;
-  width:15px;
-  height:15px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
   background-color: #d3d3d3;
   border: 8px solid #333;
   box-shadow: inset 5px 5px #f5f3f4;
-  top:2px;
-  left:2px;
+  top: 2px;
+  left: 2px;
   animation: spin .5s infinite linear;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .clouds {
   position: absolute;
-  background-color: rgba(255,255,255,0.5);
-  width:35px;
-  height:10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 35px;
+  height: 10px;
   border-radius: 20px;
-  top:100px;
-  left:100px;
-  z-index:1;
-  box-shadow: 130px 50px rgba(255,255,255,0.5), -100px 20px rgba(255,255,255,0.5);
+  top: 100px;
+  left: 100px;
+  z-index: 1;
+  box-shadow: 130px 50px rgba(255, 255, 255, 0.5), -100px 20px rgba(255, 255, 255, 0.5);
   animation: cloud 1.5s linear infinite reverse;
 }
 
-@keyframes cloud {  
-  from{ 
-    left:-150px; 
+@keyframes cloud {
+  from {
+    left: -150px;
   }
-  to{ 
-    left: 400px; 
+
+  to {
+    left: 400px;
   }
 }

@@ -1,13 +1,30 @@
-.logo:hover {
-  transform: scale(1.2);
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Public+Sans:wght@200&display=swap');
+
+.navhome-a,
+.navhome-b,
+.navhome-c {
+  font-family: 'PT Sans', sans-serif;
+  color: antiquewhite;
+}
+.navhome-a:hover,
+.navhome-b:hover {
+  transform: scale(1.1);
+  color: green;
 }
 
-.home:hover {
+.navhome-c:hover {
   transform: scale(1.2);
+  color: green;
 }
-.index:hover {
-  transform: scale(1.2);
+
+.navbar {
+  background: rgb(6, 22, 41);
+  background: linear-gradient(90deg, rgba(6, 22, 41, 1) 0%, rgba(16, 103, 255, 1) 50%, rgba(69, 212, 252, 0.5172443977591037) 100%);
 }
-.addcar:hover {
-  transform: scale(1.2);
+
+@media screen and (max-width: 480px) {
+  .car-logo {
+    width: 100px;
+    height: auto;
+  }
 }

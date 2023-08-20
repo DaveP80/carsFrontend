@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import CarForm from "../CarForm/CarForm";
 import { FormContext } from "../Context/context";
+import { carmakers } from "../helper";
 import "./CreateCar.css";
 
 function CreateCar() {
   const dataShape = {
     table: "car",
-    make: "",
+    make: carmakers[0],
     model: "",
     mpg: 23,
     cylinders: 6,
@@ -30,10 +31,7 @@ function CreateCar() {
     <div className="min-vh-100 create-car">
       <div className="container p-4">
         <div className="border border-dark rounded shadow bg-gradient p-4">
-
-
           <header>
-
             <h2>Create New Entry</h2>
             <p>Please fill in the required fields below:</p>
             <p>Adding an image is optional:</p>

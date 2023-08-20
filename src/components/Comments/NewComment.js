@@ -12,7 +12,7 @@ function NewComment() {
     } = useContext(CommContext);
     return (
         <div className="">
-            <h4><span class="badge bg-secondary">Add a Comment</span></h4>
+            <h4><span className="badge bg-secondary">Add a Comment</span></h4>
             <form onSubmit={handleAddComment}>
                 <div className="mb-2">
                     <input

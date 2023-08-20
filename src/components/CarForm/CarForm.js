@@ -41,7 +41,6 @@ function CarForm() {
                 );
                 return;
             }
-            // let formState = JSON.parse(JSON.stringify(formState));
             formState['name'] = formState.make + " " + formState.model.trim();
             delete formState.make; delete formState.model;
             if (formState.table) {
@@ -88,7 +87,7 @@ function CarForm() {
                         value={formState.make}
                         onChange={(e) => handleInputChange('make', e.target.value)}
                     >
-                        {carmakers.sort().map((item, i) => {
+                        {carmakers.map((item, i) => {
                             return (
                                 <option value={item} key={i}>
                                     {item}

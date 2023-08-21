@@ -3,7 +3,7 @@ import Overlay from "../../common/Overlay";
 import { CarContext } from "../Context/context";
 import { fetchIndexData, fetchIndexDataDesc } from "../api";
 import { updown } from "../../assets";
-import "./DIndex.css"
+import "./DIndex.css";
 
 function Index() {
   const { isLoading, setIsLoading } = useContext(CarContext);
@@ -35,9 +35,9 @@ function Index() {
       <div className="container-fluid pt-2 gradient-background">
         {cars && (
           <>
-                <div className="object-fit-none border rounded indexheader">
-    <h2 className="display-5 text-light">Classic car db</h2>
-  </div>
+            <div className="rounded indexheader">
+              <h2 className="display-5 text-light">Classic car db</h2>
+            </div>
 
             <div className="table-responsive">
               <table className="table table-bordered mt-2 shadow-lg">
@@ -47,7 +47,11 @@ function Index() {
                       ID
                       <img
                         src={updown}
-                        style={{ width: "25px", height: "33px", cursor: 'pointer' }}
+                        style={{
+                          width: "25px",
+                          height: "33px",
+                          cursor: "pointer",
+                        }}
                         alt="updown"
                         onClick={() => setOrder(!order)}
                       />
@@ -78,11 +82,12 @@ function Index() {
               </table>
             </div>
           </>
-        ) }
-        { noresult && <div className="alert alert-primary" role="alert">
+        )}
+        {noresult && (
+          <div className="alert alert-primary" role="alert">
             Unable to load info
           </div>
-        }
+        )}
       </div>
     </Overlay>
   );

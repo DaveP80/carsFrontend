@@ -2,6 +2,7 @@ import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 const API3 = process.env.REACT_APP_API_URL3;
 const API4 = process.env.REACT_APP_API_URL4;
+const API5 = process.env.REACT_APP_API_URL5;
 const ID = process.env.REACT_APP_API_CSEID;
 const KEY = process.env.REACT_APP_API_CSEKEY;
 
@@ -123,6 +124,15 @@ export async function updateCarPopularity(id) {
 export async function fetchCarImage(data) {
   try {
     const result = await axios.get(`https://www.googleapis.com/customsearch/v1?q=${data}&cx=${ID}&searchType=image&num=5&key=${KEY}`);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function fetchIndexPage(num) {
+  try {
+    const result = await axios.get(`${API5}/${num}`);
     return result;
   } catch (e) {
     console.log(e);

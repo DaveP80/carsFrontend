@@ -18,11 +18,14 @@ function AllCars() {
     fetchPopularCars()
       .then((res) => {
         let arr = [];
+        if (res.data.length < 16) setAllCars(res.data);
+        else if (res.data.length >= 16) {
         while (arr.length < 16) {
           let n = Math.floor(Math.random() * res.data.length);
           if (!arr.includes(n)) arr.push(n);
         }
         setAllCars(() => arr.map((item) => res.data[item]));
+      }
         setIsLoading(false);
       })
       .catch((e) => navigate("/404"));

@@ -16,7 +16,6 @@ function ShowCar() {
   const { id } = useParams();
   const [car, setCar] = useState([]);
   const [showForm, setShowForm] = useState(null);
-  //const [put, setPut] = useState({});
   const [showDel, setShowDel] = useState(false);
   const [count, setCount] = useState(1);
   const [dataShape, setDataShape] = useState({});
@@ -42,7 +41,6 @@ function ShowCar() {
     setIsLoading(true);
     fetchCarById(id)
       .then((res) => {
-        //array
         setCar(res.data);
         setCount(res.data[0].count);
         setDataShape({

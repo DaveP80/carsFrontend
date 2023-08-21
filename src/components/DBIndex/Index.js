@@ -4,16 +4,34 @@ import { CarContext } from "../Context/context";
 import { fetchIndexData, fetchIndexDataDesc, fetchIndexedPage } from "../api";
 import { updown } from "../../assets";
 import { v1 as generateUniqueID } from "uuid";
+import { scrollToTop } from "../helper";
 import "./DIndex.css";
-//`select * from cars order by id offset $1`
+
 function Index() {
   const { isLoading, setIsLoading } = useContext(CarContext);
   const [cars, setCars] = useState(null);
   const [order, setOrder] = useState(false);
   const [noresult, setnoResult] = useState(null);
   const [pages, setPages] = useState([1]);
+  const [showButton, setShowButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleOnClick = async (e) => {
+    if (Math.floor(cars[0].id / 50) + 1 === +e) return;
     setIsLoading(true);
     if (+e === 1) firstPage();
     else if (+e > 1)
@@ -70,7 +88,11 @@ function Index() {
                     {pages.map((item) => {
                       return (
                         <li
-                          className={`page-item${item == 1 ? " active" : ""}`}
+                          className={`page-item${
+                            Math.floor(cars[0].id / 50) + 1 === item
+                              ? " active"
+                              : ""
+                          }`}
                           key={generateUniqueID()}
                           id={item}
                           value={item}
@@ -87,7 +109,7 @@ function Index() {
             </div>
 
             <div className="table-responsive">
-              <table className="table table-bordered mt-2 shadow-lg">
+              <table className="table table-bordered shadow-lg">
                 <thead>
                   <tr>
                     <th>
@@ -127,6 +149,14 @@ function Index() {
                   ))}
                 </tbody>
               </table>
+              <button
+                className={`btn btn-primary back-to-top-button ${
+                  showButton ? "show" : ""
+                }`}
+                onClick={scrollToTop}
+              >
+                Back to Top
+              </button>
             </div>
           </>
         )}

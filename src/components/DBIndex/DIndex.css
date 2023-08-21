@@ -6,6 +6,37 @@
   padding: 0 1em;
 }
 
+table th {
+  background: rgb(252, 251, 239);
+  background: linear-gradient(
+    180deg,
+    rgba(252, 251, 239, 1) 50%,
+    rgba(194, 255, 212, 0.6194852941176471) 100%
+  );
+}
+
+tbody td {
+  background: rgb(252, 251, 239);
+  background: linear-gradient(
+    180deg,
+    rgba(252, 251, 239, 1) 50%,
+    rgba(194, 255, 212, 0.6194852941176471) 100%
+  );
+}
+
+.back-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-to-top-button.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .gradient-background {
   background: linear-gradient(
     118deg,

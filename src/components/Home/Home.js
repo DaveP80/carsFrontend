@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className="container-fluid home-parent">
       <div className="container pb-5 home-container">
-        <div className="py-5 d-flex justify-content-center">
+        <div className="pt-4 pb-2 d-flex justify-content-center">
           <img
             className="img-fluid rounded shadow img-width-md-50 img-width-sm-80"
             src={giflogo}

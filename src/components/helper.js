@@ -56,36 +56,36 @@ export const carmakers = [
 ];
 
 export const selectColor = [
-  "Black",
-  "White",
-  "Silver",
-  "Gray",
-  "Red",
-  "Blue",
-  "Brown",
-  "Beige",
-  "Green",
-  "Gold",
-  "Yellow",
-  "Orange",
-  "Purple",
-  "Pink",
-  "Bronze",
-  "Copper",
-  "Champagne",
-  "Magenta",
-  "Indigo",
-  "Teal",
-  "Turquoise",
-  "Lime",
-  "Olive",
   "Aqua",
+  "Blue",
+  "Bronze",
+  "Brown",
+  "Silver",
+  "Burgundy",
+  "Champagne",
+  "Red",
+  "Gray",
+  "Green",
+  "Charcoal",
+  "Beige",
+  "White",
+  "Copper",
+  "Black",
+  "Crimson",
+  "Gold",
+  "Indigo",
+  "Lime",
+  "Magenta",
   "Maroon",
   "Navy",
-  "Charcoal",
-  "Burgundy",
+  "Pink",
+  "Olive",
+  "Orange",
+  "Purple",
+  "Teal",
+  "Turquoise",
   "Violet",
-  "Crimson",
+  "Yellow",
 ];
 
 export const origin = ["usa", "europe", "japan"];
@@ -99,3 +99,7 @@ export function validateForm(obj) {
       obj[item] !== 0
   );
 }
+
+export const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};

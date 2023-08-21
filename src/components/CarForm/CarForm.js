@@ -106,7 +106,7 @@ function CarForm() {
                     {formState.model.length > 0 && (
                         <div className="form-check form-switch" style={{ float: 'right' }}>
                             <input className={`form-check-input ${showModal ? 'bg-success' : 'bg-warning'}`} type="checkbox" role="switch" checked={showModal} onChange={() => setShowModal(true)} id="flexSwitchCheckDefault" />
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Add Image from google</label>
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{formState.preferences.imageURL ? "Update Image" : "Add Image from google"}</label>
                         </div>
                     )}
                 </div>

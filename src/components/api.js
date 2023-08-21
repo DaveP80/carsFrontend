@@ -17,7 +17,7 @@ export async function fetchCarData() {
 
 export async function fetchIndexData() {
   try {
-    const result = await axios.get(`${API}/cars/limit/100`);
+    const result = await axios.get(`${API}/cars/limit/50`);
     return result;
   } catch (e) {
     console.log(e);
@@ -35,7 +35,7 @@ export async function getSearchSugg() {
 
 export async function fetchIndexDataDesc() {
   try {
-    const result = await axios.get(`${API}/cars/limit/desc/20`);
+    const result = await axios.get(`${API}/cars/limit/desc/50`);
     return result;
   } catch (e) {
     console.log(e);
@@ -130,7 +130,7 @@ export async function fetchCarImage(data) {
   }
 }
 
-export async function fetchIndexPage(num) {
+export async function fetchIndexedPage(num) {
   try {
     const result = await axios.get(`${API5}/${num}`);
     return result;

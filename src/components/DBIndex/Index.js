@@ -1,15 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
 import Overlay from "../../common/Overlay";
 import { CarContext } from "../Context/context";
-import { fetchIndexData, fetchIndexDataDesc } from "../api";
+import { fetchIndexData, fetchIndexDataDesc, fetchIndexedPage } from "../api";
 import { updown } from "../../assets";
+import { v1 as generateUniqueID } from "uuid";
 import "./DIndex.css";
-
+//`select * from cars order by id offset $1`
 function Index() {
   const { isLoading, setIsLoading } = useContext(CarContext);
   const [cars, setCars] = useState(null);
   const [order, setOrder] = useState(false);
   const [noresult, setnoResult] = useState(null);
+  const [pages, setPages] = useState([1]);
+
+  const handleOnClick = async (e) => {
+    setIsLoading(true);
+    if (+e === 1) firstPage();
+    else if (+e > 1)
+      await fetchIndexedPage((Number(e) - 1) * 50)
+        .then((res) => {
+          setCars(res.data.slice(0, 50));
+        })
+        .catch((e) => console.log(e));
+    setIsLoading(false);
+  };
+
+  function firstPage() {
+    fetchIndexData()
+      .then((res) => {
+        setCars(res.data);
+        let pgs = Math.floor(res.data[0].count / 50);
+        if (pages.length < pgs)
+          setPages(Array.from({ length: pgs + 1 }, (_, index) => index + 1));
+      })
+      .catch((e) => setnoResult(true));
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,22 +46,44 @@ function Index() {
         })
         .catch((e) => setnoResult(true));
     } else {
-      fetchIndexData()
-        .then((res) => {
-          setCars(res.data);
-          setIsLoading(false);
-        })
-        .catch((e) => setnoResult(true));
+      firstPage();
+      setIsLoading(false);
     }
   }, [order]);
 
   return (
     <Overlay isLoading={isLoading}>
       <div className="container-fluid pt-2 gradient-background">
-        {cars && (
+        {cars && pages.length > 1 && (
           <>
-            <div className="rounded indexheader">
-              <h2 className="display-5 text-light">Classic car db</h2>
+            <div className="container">
+              <header className="rounded text-center indexheader">
+                <h2 className="display-5 text-light">Classic car db</h2>
+                <nav aria-label="..." className="">
+                  <ul
+                    className={`pagination ${
+                      window.innerWidth >= 992
+                        ? "pagination-lg"
+                        : "pagination-sm"
+                    } mt-1`}
+                  >
+                    {pages.map((item) => {
+                      return (
+                        <li
+                          className={`page-item${item == 1 ? " active" : ""}`}
+                          key={generateUniqueID()}
+                          id={item}
+                          value={item}
+                          aria-current="page"
+                          onClick={() => handleOnClick(item)}
+                        >
+                          <span className="page-link">{item}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </nav>
+              </header>
             </div>
 
             <div className="table-responsive">
@@ -67,7 +114,7 @@ function Index() {
                 </thead>
                 <tbody>
                   {cars.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={generateUniqueID()}>
                       <td>{item.id}</td>
                       <td>{item.name}</td>
                       <td>{item.mpg}</td>

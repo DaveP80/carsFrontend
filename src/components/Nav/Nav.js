@@ -9,11 +9,13 @@ import "./Nav.css";
 function Nav2() {
   const [searchArr, setSearchArr] = useState(null);
   const { search } = useContext(CarContext);
+
   useEffect(() => {
     getSearchSugg()
       .then((res) => setSearchArr(res.data))
       .catch((e) => console.log(e));
   }, [search]);
+
   return (
     <nav className="navbar shadow">
       <div className="container">
@@ -54,7 +56,7 @@ function Nav2() {
                 Index
               </Link>
             </li>
-            <li className="nav-item text-center shadow">
+            <li className="nav-item mb-1 text-center shadow">
               <Link
                 className="nav-link navhome-c"
                 to="/create"

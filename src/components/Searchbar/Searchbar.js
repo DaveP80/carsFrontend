@@ -49,7 +49,7 @@ function SearchBar({ searchArr }) {
         {filteredSuggestions.length > 0 && (
           <ul
             className="list-group"
-            style={{ cursor: "pointer", maxHeight: "5em", overflowY: "auto" }}
+            style={{ cursor: "pointer", maxHeight: "7em", overflowY: "auto" }}
           >
             {filteredSuggestions.map((suggestion, index) => (
               <li

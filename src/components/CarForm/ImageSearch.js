@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { selectColor } from "../helper";
 import { fetchCarImage } from "../api";
-import "./ImageSearch.css";
-import FormOverlay from "../../common/FormOverlay";
 import { CarContext } from "../Context/context";
+import FormOverlay from "../../common/FormOverlay";
 import FormSpinner from "../../common/FormSpinner";
+import "./ImageSearch.css";
 
 function ImageSearch({
   formState,

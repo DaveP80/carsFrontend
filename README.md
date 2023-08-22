@@ -38,4 +38,3 @@ node server.js
 - [back end code](https://github.com/DaveP80/carsBackend) 
 - [backend server](https://carsbackend-0ncm.onrender.com)
 - [Website](https://pursuitclassicar.netlify.app/) 
-<p style="display: none;">davidpaquette</p>

@@ -19,7 +19,7 @@ function Home() {
           />
         </div>
         <div className="w-50 mx-auto rounded text-center home-text">
-          <h4 className="text-dark">
+          <h4 className="text-dark" id="davidpaquette">
             Classic Car database and comment on your favorite car.
           </h4>
           <h4 className="text-dark">

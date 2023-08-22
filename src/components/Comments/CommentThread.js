@@ -58,7 +58,7 @@ function CommentThread({ commentz }) {
                         </div>
                     ) :
                     <>
-                        <h3><span class="badge text-bg-light">Comment Thread</span></h3>
+                        <h3><span className="badge text-bg-light">Comment Thread</span></h3>
                         <ul className="list-group">
                             {comments.map((comment, index) => {
                                 if (comment.name)

@@ -10,9 +10,9 @@ function SearchBar({ searchArr }) {
   const handleInputChange = (event) => {
     const inputText = event.target.value;
     setSearchText(inputText);
-    const filtered = searchArr.filter((suggestion) =>
+    const filtered = searchArr ? searchArr.filter((suggestion) =>
       suggestion.name.toLowerCase().includes(inputText.toLowerCase())
-    );
+    ) : []
     setFilteredSuggestions(filtered);
     if (inputText.length < (query.name && query.name.length)) setQuery("");
     if (inputText.length === 0) setFilteredSuggestions([]);

@@ -45,7 +45,10 @@ function CarForm() {
         await newEntry(formState).then((response) => {
           navigate(`/cars/${response.data.id}`);
           setSearch(!search);
-        });
+        }).catch(e => {
+        alert('api error');
+        handleReset()});
+        console.log('possible duplicate make model year');
       } else if (formState.id) {
         let id = formState.id;
         delete formState.id;
@@ -57,14 +60,14 @@ function CarForm() {
             setSearch(!search);
           })
           .catch((e) => {
-            console.log(e);
             setShowForm(false);
+            alert('api down');
             handleReset();
+            console.log('possible duplicate make model year');
           });
       }
     } catch (e) {
-      setShowForm(false);
-      handleReset();
+      console.log(e);
     }
   };
   const handleInputChange = (field, value) => {

@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { ccar } from "../../assets";
 import { getSearchSugg } from "../api";
 import Searchbar from "../Searchbar/Searchbar";
+import { CarContext } from "../Context/context";
 import "./Nav.css";
 
 function Nav2() {
-  const location = useLocation();
   const [searchArr, setSearchArr] = useState(null);
+  const { search } = useContext(CarContext);
   useEffect(() => {
     getSearchSugg()
       .then((res) => setSearchArr(res.data))
       .catch((e) => console.log(e));
-  }, [location]);
+  }, [search]);
   return (
     <nav className="navbar shadow">
       <div className="container">

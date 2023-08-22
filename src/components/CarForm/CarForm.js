@@ -2,12 +2,13 @@ import React, { useState, useContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateForm, carmakers, origin, } from '../helper';
 import { editCarInDB, newEntry } from '../api';
-import { FormContext } from '../Context/context';
+import { FormContext, CarContext } from '../Context/context';
 import ImageSearch from './ImageSearch';
 
 function CarForm() {
 
     const { dataShape, car, setCar, setShowForm, } = useContext(FormContext);
+    const { setSearch, search } = useContext(CarContext);
     const formReducer = (state, action) => {
         switch (action.type) {
             case 'CHANGE':
@@ -47,11 +48,12 @@ function CarForm() {
                 delete formState.table;
                 await newEntry(formState).then((response) => {
                     navigate(`/cars/${response.data.id}`);
+                    setSearch(!search);
                 });
             } else if (formState.id) {
                 let id = formState.id
                 delete formState.id
-                await editCarInDB(formState, id).then(res => { setCar([res.data, ...car]); setShowForm(false); handleReset() })
+                await editCarInDB(formState, id).then(res => { setCar([res.data, ...car]); setShowForm(false); handleReset(); setSearch(!search) })
                     .catch(e => { console.log(e); setShowForm(false); handleReset() });
             }
         } catch (e) {
@@ -109,6 +111,23 @@ function CarForm() {
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{formState.preferences.imageURL ? "Update Image" : "Add Image from google"}</label>
                         </div>
                     )}
+                </div>
+                <div className="mb-1">
+                    <label htmlFor="m-year" className="form-label">model year</label>
+                    <select
+                        className="form-control shadow-sm"
+                        id="m-year"
+                        value={formState.model_year}
+                        onChange={(e) => handleInputChange('model_year', e.target.value)}
+                    >
+                        {Array.from({ length: 100 - 70 + 1 }, (_, index) => 70 + index).reverse().map((item, i) => {
+                            return (
+                                <option value={item < 100 ? item : 20} key={i}>
+                                    {item < 100 ? item : 20}
+                                </option>
+                            );
+                        })}
+                    </select>
                 </div>
                 <div className="mb-1">
                     <label htmlFor="mpg" className="form-label">mpg</label>
@@ -193,23 +212,6 @@ function CarForm() {
                         />
                     </div>
                 }
-                <div className="mb-1">
-                    <label htmlFor="m-year" className="form-label">model year</label>
-                    <select
-                        className="form-control shadow-sm"
-                        id="m-year"
-                        value={formState.model_year}
-                        onChange={(e) => handleInputChange('model_year', e.target.value)}
-                    >
-                        {Array.from({ length: 100 - 70 + 1 }, (_, index) => 70 + index).reverse().map((item, i) => {
-                            return (
-                                <option value={item < 100 ? item : 20} key={i}>
-                                    {item < 100 ? item : 20}
-                                </option>
-                            );
-                        })}
-                    </select>
-                </div>
                 <div className="mb-1">
                     <label className="form-label">origin</label>
                     {origin.map((region) => (

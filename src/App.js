@@ -13,11 +13,14 @@ function App() {
   const Index = React.lazy(() => import("./components/DBIndex/Index"));
 
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const carContextValue = {
     isLoading,
     setIsLoading,
     carImage,
+    search,
+    setSearch,
   };
 
   return (

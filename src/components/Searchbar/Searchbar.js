@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar({ searchArr }) {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -10,23 +10,22 @@ function SearchBar({ searchArr }) {
   const handleInputChange = (event) => {
     const inputText = event.target.value;
     setSearchText(inputText);
-    const filtered = searchArr.filter(
-      suggestion =>
-        suggestion.name.toLowerCase().includes(inputText.toLowerCase())
+    const filtered = searchArr.filter((suggestion) =>
+      suggestion.name.toLowerCase().includes(inputText.toLowerCase())
     );
     setFilteredSuggestions(filtered);
-    if (inputText.length < (query.name && query.name.length)) setQuery("")
-    if (inputText.length === 0) setFilteredSuggestions([])
+    if (inputText.length < (query.name && query.name.length)) setQuery("");
+    if (inputText.length === 0) setFilteredSuggestions([]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (typeof query === 'string') return;
+    if (typeof query === "string") return;
     // Perform your search or other action here
-    else if (query.hasOwnProperty('name')) {
-      setSearchText('');
+    else if (query.hasOwnProperty("name")) {
+      setSearchText("");
       setQuery("");
-      setFilteredSuggestions([])
+      setFilteredSuggestions([]);
       navigate(`/cars/${query.id}`);
     }
   };
@@ -48,9 +47,19 @@ function SearchBar({ searchArr }) {
           </button>
         </form>
         {filteredSuggestions.length > 0 && (
-          <ul className="list-group" style={{ cursor: 'pointer', maxHeight: '5em', overflowY: 'auto' }}>
+          <ul
+            className="list-group"
+            style={{ cursor: "pointer", maxHeight: "5em", overflowY: "auto" }}
+          >
             {filteredSuggestions.map((suggestion, index) => (
-              <li className="list-group-item" key={index} onClick={() => { setQuery(suggestion); setSearchText(suggestion.name); }}>
+              <li
+                className="list-group-item"
+                key={index}
+                onClick={() => {
+                  setQuery(suggestion);
+                  setSearchText(suggestion.name);
+                }}
+              >
                 {`${suggestion.name} --year '${suggestion.model_year}`}
               </li>
             ))}
@@ -58,8 +67,7 @@ function SearchBar({ searchArr }) {
         )}
       </div>
     </div>
-
   );
-};
+}
 
 export default SearchBar;

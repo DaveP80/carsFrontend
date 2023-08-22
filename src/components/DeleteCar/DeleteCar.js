@@ -1,13 +1,14 @@
 import { useEffect, useContext } from "react";
-import { FormContext } from "../Context/context";
+import { FormContext, CarContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
 import { deleteCarById } from "../api";
 
 function DeleteCar({ name }) {
   const { setShowDel, setShowForm, id } = useContext(FormContext);
+  const { search, setSearch } = useContext(CarContext);
   const navigate = useNavigate();
   const handleDelete = async() => {
-    await deleteCarById(id).then(res => navigate('/index')).catch(e => console.log(e));
+    await deleteCarById(id).then(res => {navigate('/index'); setSearch(!search);}).catch(e => console.log(e));
     setShowDel(false);
     setShowForm(false);
   };
@@ -18,7 +19,6 @@ function DeleteCar({ name }) {
 
   return (
     <>
-      {" "}
       <div className="modal-header">
         <h5 className="modal-title">Delete Warning</h5>
         <button

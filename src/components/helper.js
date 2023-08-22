@@ -18,9 +18,9 @@ export function compareObjects(obj1, obj2) {
 }
 
 export const carmakers = [
-  "amc",
   "audi",
-  "Acura",
+  "amc",
+  "acura",
   "bmw",
   "buick",
   "cadillac",

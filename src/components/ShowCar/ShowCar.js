@@ -95,7 +95,7 @@ function ShowCar() {
                   <div className="shadow-border">
                     <h1 className="text-dark">{car[0].name}</h1>
                     <h5 className="text-secondary">
-                      <span className="fw-bolder">Model Year</span>:{" "}
+                      <span className="fw-bolder">Model Year</span>:
                       {+car[0].model_year === 20
                         ? 2000
                         : "19" + car[0].model_year}

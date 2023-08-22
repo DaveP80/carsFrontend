@@ -125,7 +125,7 @@ function Index() {
                         onClick={() => setOrder(!order)}
                       />
                     </th>
-                    <th>make model</th>
+                    <th style={{width: "15%"}}>make model</th>
                     <th>mpg</th>
                     <th>cylinders</th>
                     <th>horsepower</th>

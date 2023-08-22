@@ -21,7 +21,6 @@ function SearchBar({ searchArr }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (typeof query === "string") return;
-    // Perform your search or other action here
     else if (query.hasOwnProperty("name")) {
       setSearchText("");
       setQuery("");
@@ -57,7 +56,7 @@ function SearchBar({ searchArr }) {
                 key={index}
                 onClick={() => {
                   setQuery(suggestion);
-                  setSearchText(suggestion.name);
+                  setSearchText(`${suggestion.name} '${suggestion.model_year}`);
                 }}
               >
                 {`${suggestion.name} --year '${suggestion.model_year}`}

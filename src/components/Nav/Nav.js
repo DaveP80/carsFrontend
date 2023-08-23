@@ -7,8 +7,7 @@ import { CarContext } from "../Context/context";
 import "./Nav.css";
 
 function Nav2() {
-  const [searchArr, setSearchArr] = useState(null);
-  const { search } = useContext(CarContext);
+  const { search, searchArr, setSearchArr } = useContext(CarContext);
 
   useEffect(() => {
     getSearchSugg()

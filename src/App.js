@@ -14,6 +14,7 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState(false);
+  const [searchArr, setSearchArr] = useState([]);
 
   const carContextValue = {
     isLoading,
@@ -21,6 +22,8 @@ function App() {
     carImage,
     search,
     setSearch,
+    searchArr,
+    setSearchArr,
   };
 
   return (

@@ -1,34 +1,18 @@
 import React, { useEffect } from "react";
 import CarForm from "../CarForm/CarForm";
 import { FormContext } from "../Context/context";
-import { carmakers } from "../helper";
+import { setShape } from "../helper";
 import "./CreateCar.css";
 
 function CreateCar() {
-  const dataShape = {
-    table: "car",
-    make: carmakers[0],
-    model: "",
-    mpg: 23,
-    cylinders: 6,
-    //optional
-    displacement: 194,
-    horsepower: 105,
-    weight: 2974,
-    //optional
-    acceleration: 15.6,
-    origin: "usa",
-    //between 70 and 99
-    model_year: 84,
-    preferences: { imageURL: null, color: null }
-  };
+  const dataShape = setShape("create");
 
   useEffect(() => {
     document.getElementById("model").focus();
   }, [])
 
   return (
-    <div className="min-vh-100 create-car">
+    <div className="min-vh-85 create-car">
       <div className="container p-4">
         <div className="border border-dark rounded shadow bg-gradient p-4">
           <header>

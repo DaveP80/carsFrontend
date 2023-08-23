@@ -1,19 +1,30 @@
 import React, { useState, useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateForm, carmakers, compareObjects, origin } from "../helper";
+import {
+  validateForm,
+  setShape,
+  carmakers,
+  compareObjects,
+  origin,
+} from "../helper";
 import { editCarInDB, newEntry } from "../api";
 import { FormContext, CarContext } from "../Context/context";
 import ImageSearch from "./ImageSearch";
 
 function CarForm() {
-  const { dataShape, car, setCar, setShowForm } = useContext(FormContext);
-  const { setSearch, search } = useContext(CarContext);
+  const { dataShape, setDataShape, car, setCar, setShowForm } =
+    useContext(FormContext);
+  const { setSearch, search, searchArr } = useContext(CarContext);
+
   const formReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE":
         return {
           ...state,
-          [action.field]: typeof action.value === 'string' ? action.value.toLowerCase() : action.value,
+          [action.field]:
+            typeof action.value === "string"
+              ? action.value.toLowerCase()
+              : action.value,
         };
       case "RESET":
         return dataShape;
@@ -42,13 +53,16 @@ function CarForm() {
       delete formState.model;
       if (formState.table) {
         delete formState.table;
-        await newEntry(formState).then((response) => {
-          navigate(`/cars/${response.data.id}`);
-          setSearch(!search);
-        }).catch(e => {
-        alert('api error');
-        handleReset()});
-        console.log('possible duplicate make model year');
+        await newEntry(formState)
+          .then((response) => {
+            navigate(`/cars/${response.data.id}`);
+            setSearch(!search);
+          })
+          .catch((e) => {
+            alert("api error");
+            handleReset();
+            console.log("possible duplicate make model year");
+          });
       } else if (formState.id) {
         let id = formState.id;
         delete formState.id;
@@ -56,20 +70,28 @@ function CarForm() {
           .then((res) => {
             setCar([res.data, ...car]);
             setShowForm(false);
-            handleReset();
-            setSearch(!search);
+            setDataShape(() => setShape({ data: [res.data] }));
+            const found = searchArr.find((item) => +item.id === +id);
+            if (found) {
+              if (
+                found.name !== formState.name ||
+                +found.model_year !== +formState.model_year
+              )
+                setSearch(!search);
+            }
           })
           .catch((e) => {
             setShowForm(false);
-            alert('api down');
+            alert("api down");
             handleReset();
-            console.log('possible duplicate make model year');
+            console.log("possible duplicate make model year");
           });
       }
     } catch (e) {
       console.log(e);
     }
   };
+
   const handleInputChange = (field, value) => {
     dispatch({ type: "CHANGE", field, value });
   };

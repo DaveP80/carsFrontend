@@ -17,6 +17,51 @@ export function compareObjects(obj1, obj2) {
   return a === b;
 }
 
+export function setShape(res) {
+  if (res === "create") {
+    return {
+      table: "car",
+      make: carmakers[0],
+      model: "",
+      mpg: 23,
+      cylinders: 6,
+      //optional
+      displacement: 194,
+      horsepower: 105,
+      weight: 2974,
+      //optional
+      acceleration: 15.6,
+      origin: "usa",
+      //between 70 and 99
+      model_year: 84,
+      preferences: { imageURL: null, color: null },
+    };
+  }
+  return {
+    id: res.data[0].id,
+    make: res.data[0].name.split(" ")[0].toLowerCase(),
+    model:
+      res.data[0].name.split(" ").slice(1).length > 0
+        ? res.data[0].name.split(" ").slice(1).join(" ").toLowerCase()
+        : "",
+    mpg: res.data[0].mpg,
+    cylinders: res.data[0].cylinders,
+    //optional
+    displacement: res.data[0].displacement,
+    horsepower: res.data[0].horsepower,
+    weight: res.data[0].weight,
+    //optional
+    acceleration: res.data[0].acceleration,
+    origin: res.data[0].origin || "usa",
+    //between 70 and 99
+    model_year: res.data[0].model_year,
+    preferences: res.data[0].preferences || {
+      imageURL: null,
+      color: null,
+    },
+  };
+}
+
 export const carmakers = [
   "audi",
   "amc",

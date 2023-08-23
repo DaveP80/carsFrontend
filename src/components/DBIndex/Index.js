@@ -12,8 +12,9 @@ function Index() {
   const [cars, setCars] = useState(null);
   const [order, setOrder] = useState(false);
   const [noresult, setnoResult] = useState(null);
-  const [pages, setPages] = useState([1]);
+  const [pages, setPages] = useState(null);
   const [showButton, setShowButton] = useState(false);
+  const [off, setOff] = useState(1);
 
   const handleScroll = () => {
     if (window.scrollY > 300) {
@@ -31,28 +32,16 @@ function Index() {
   }, []);
 
   const handleOnClick = async (e) => {
-    if (Math.floor(cars[0].id / 50) + 1 === +e) return;
+    if (off === +e) return;
     setIsLoading(true);
-    if (+e === 1) firstPage();
-    else if (+e > 1)
       await fetchIndexedPage((Number(e) - 1) * 50)
         .then((res) => {
-          setCars(res.data.slice(0, 50));
+          setCars(res.data);
+          setOff(e);
         })
         .catch((e) => console.log(e));
     setIsLoading(false);
   };
-
-  function firstPage() {
-    fetchIndexData()
-      .then((res) => {
-        setCars(res.data);
-        let pgs = Math.floor(res.data[0].count / 50);
-        if (pages.length < pgs)
-          setPages(Array.from({ length: pgs + 1 }, (_, index) => index + 1));
-      })
-      .catch((e) => setnoResult(true));
-  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -60,19 +49,34 @@ function Index() {
       fetchIndexDataDesc()
         .then((res) => {
           setCars(res.data);
-          setIsLoading(false);
         })
         .catch((e) => setnoResult(true));
     } else {
-      firstPage();
-      setIsLoading(false);
+      fetchIndexData()
+      .then((res) => {
+        setCars(res.data);
+      })
+      .catch((e) => setnoResult(true));
     }
+    setIsLoading(false);
   }, [order]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchIndexData()
+      .then((res) => {
+        setCars(res.data);
+        let pgs = Math.floor(res.data[0].count / 50);
+          setPages(Array.from({ length: pgs + 1 }, (_, index) => index + 1));
+      })
+      .catch((e) => setnoResult(true));
+      setIsLoading(false);
+  }, []);
 
   return (
     <Overlay isLoading={isLoading}>
       <div className="container-fluid pt-2 gradient-background">
-        {cars && pages.length > 1 && (
+        {cars && pages && (
           <>
             <div className="container">
               <header className="rounded text-center indexheader">
@@ -89,13 +93,12 @@ function Index() {
                       return (
                         <li
                           className={`page-item${
-                            Math.floor(cars[0].id / 50) + 1 === item
+                            off === item
                               ? " active"
                               : ""
                           }`}
                           key={generateUniqueID()}
                           id={item}
-                          value={item}
                           aria-current="page"
                           onClick={() => handleOnClick(item)}
                         >

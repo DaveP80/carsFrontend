@@ -88,8 +88,8 @@ export async function fetchBySubstring(query) {
     return result;
   } catch (e) {
     console.log({
-      message: 'no results',
-      err: e
+      message: "no results",
+      err: e,
     });
   }
 }
@@ -123,7 +123,9 @@ export async function updateCarPopularity(id) {
 
 export async function fetchCarImage(data) {
   try {
-    const result = await axios.get(`https://www.googleapis.com/customsearch/v1?q=${data}&cx=${ID}&searchType=image&num=5&key=${KEY}`);
+    const result = await axios.get(
+      `https://www.googleapis.com/customsearch/v1?q=${data}&cx=${ID}&searchType=image&num=5&key=${KEY}`
+    );
     return result;
   } catch (e) {
     console.log(e);
@@ -132,7 +134,12 @@ export async function fetchCarImage(data) {
 
 export async function fetchIndexedPage(num) {
   try {
-    const result = await axios.get(`${API5}/${num}`);
+    const result = await axios.get(`${API5}`, {
+      params: {
+        off: num,
+        lim: 50,
+      },
+    });
     return result;
   } catch (e) {
     console.log(e);

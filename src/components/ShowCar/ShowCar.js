@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Overlay from "../../common/Overlay";
 import { fetchCarById } from "../api";
 import { CarContext, CommContext, FormContext } from "../Context/context";
+import { setShape } from "../helper";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import CarForm from "../CarForm/CarForm";
 import ThumbsUp from "./ThumbsUp";
@@ -29,6 +30,7 @@ function ShowCar() {
 
   const crudFormValues = {
     dataShape,
+    setDataShape,
     car,
     setCar,
     setShowForm,
@@ -43,29 +45,7 @@ function ShowCar() {
       .then((res) => {
         setCar(res.data);
         setCount(res.data[0].count);
-        setDataShape({
-          id: res.data[0].id,
-          make: res.data[0].name.split(" ")[0],
-          model:
-            res.data[0].name.split(" ").slice(1).length > 0
-              ? res.data[0].name.split(" ").slice(1).join(" ")
-              : "",
-          mpg: res.data[0].mpg,
-          cylinders: res.data[0].cylinders,
-          //optional
-          displacement: res.data[0].displacement,
-          horsepower: res.data[0].horsepower,
-          weight: res.data[0].weight,
-          //optional
-          acceleration: res.data[0].acceleration,
-          origin: res.data[0].origin || "usa",
-          //between 70 and 99
-          model_year: res.data[0].model_year,
-          preferences: res.data[0].preferences || {
-            imageURL: null,
-            color: null,
-          },
-        });
+        setDataShape(() => setShape(res));
         setIsLoading(false);
       })
       .catch((e) => navigate("/404"));
@@ -97,8 +77,8 @@ function ShowCar() {
                     <h5 className="text-secondary">
                       <span className="fw-bolder">Model Year</span>:
                       {+car[0].model_year === 20
-                        ? 2000
-                        : "19" + car[0].model_year}
+                        ? " 2000"
+                        : " 19" + car[0].model_year}
                     </h5>
                     <h5 className="text-secondary">
                       <span className="fw-bolder">horsepower</span>:{" "}

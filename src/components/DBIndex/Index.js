@@ -66,8 +66,8 @@ function Index() {
     fetchIndexData()
       .then((res) => {
         setCars(res.data);
-        let pgs = Math.floor(res.data[0].count / 50);
-          setPages(Array.from({ length: pgs + 1 }, (_, index) => index + 1));
+        let pgs = Math.floor(res.data[0].count / 50)+ (res.data[0].count%50 ? 1 : 0);
+          setPages(Array.from({ length: pgs }, (_, index) => index + 1));
       })
       .catch((e) => setnoResult(true));
       setIsLoading(false);

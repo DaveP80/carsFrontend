@@ -43,6 +43,11 @@ function Index() {
     setIsLoading(false);
   };
 
+  const handleNameClick = (e) => {
+    document.getElementById('searchbar').value = e;
+    document.getElementById('searchbar').focus()
+  }
+
   useEffect(() => {
     setIsLoading(true);
     if (order) {
@@ -141,7 +146,7 @@ function Index() {
                   {cars.map((item) => (
                     <tr key={generateUniqueID()}>
                       <td>{item.id}</td>
-                      <td>{item.name}</td>
+                      <td onClick={() => handleNameClick(item.name)}>{item.name}</td>
                       <td>{item.mpg}</td>
                       <td>{item.cylinders}</td>
                       <td>{item.horsepower}</td>

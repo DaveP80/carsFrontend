@@ -38,26 +38,40 @@ export function setShape(res) {
     };
   }
   return {
-    id: res.data[0].id,
-    make: res.data[0].name.split(" ")[0].toLowerCase(),
+    id: res.id,
+    make: res.name.split(" ")[0].toLowerCase(),
     model:
-      res.data[0].name.split(" ").slice(1).length > 0
-        ? res.data[0].name.split(" ").slice(1).join(" ").toLowerCase()
+      res.name.split(" ").slice(1).length > 0
+        ? res.name.split(" ").slice(1).join(" ").toLowerCase()
         : "",
-    mpg: res.data[0].mpg,
-    cylinders: res.data[0].cylinders,
+    mpg: res.mpg,
+    cylinders: res.cylinders,
     //optional
-    displacement: res.data[0].displacement,
-    horsepower: res.data[0].horsepower,
-    weight: res.data[0].weight,
+    displacement: res.displacement,
+    horsepower: res.horsepower,
+    weight: res.weight,
     //optional
-    acceleration: res.data[0].acceleration,
-    origin: res.data[0].origin || "usa",
+    acceleration: res.acceleration,
+    origin: res.origin || "usa",
     //between 70 and 99
-    model_year: res.data[0].model_year,
-    preferences: res.data[0].preferences || {
-      imageURL: null,
-      color: null,
+    model_year: res.model_year,
+    preferences: {
+      imageURL:
+        res.preferences.imageURL &&
+        !res.preferences.imageURL.includes("gstatic")
+          ? null
+          : res.preferences.imageURL,
+      color: res.preferences.color || null,
+    },
+  };
+}
+
+export function carImageSrc(obj) {
+  return {
+    ...obj,
+    preferences: {
+      imageURL: obj.preferences.imageURL || carImage(),
+      color: obj.preferences.color || null,
     },
   };
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import FormSpinner from "./FormSpinner";
 
-function FormOverlay({ children, isLoading }) {
+function FormOverlay({ children, searchLoading }) {
   return (
     <>
-      {isLoading && (
+      {searchLoading && (
         <FormSpinner />
       )}
       {children}

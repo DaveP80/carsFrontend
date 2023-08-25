@@ -12,9 +12,10 @@ import { FormContext, CarContext } from "../Context/context";
 import ImageSearch from "./ImageSearch";
 
 function CarForm() {
-  const { dataShape, setDataShape, car, setCar, setShowForm } =
+  const { dataShape, setDataShape, car, setCar, setShowForm, carImageSrc } =
     useContext(FormContext);
   const { setSearch, search, searchArr } = useContext(CarContext);
+  const [err, setErr] = useState(false);
 
   const formReducer = (state, action) => {
     switch (action.type) {
@@ -41,6 +42,7 @@ function CarForm() {
     e.preventDefault();
     if (formState.model === "") return;
     if (compareObjects(formState, dataShape)) {
+      setErr(true);
       return;
     }
     try {
@@ -68,9 +70,9 @@ function CarForm() {
         delete formState.id;
         await editCarInDB(formState, id)
           .then((res) => {
-            setCar([res.data, ...car]);
+            setCar([carImageSrc(res.data), ...car]);
             setShowForm(false);
-            setDataShape(() => setShape({ data: [res.data] }));
+            setDataShape(() => setShape(res.data));
             const found = searchArr.find((item) => +item.id === +id);
             if (found) {
               if (
@@ -100,6 +102,7 @@ function CarForm() {
     dispatch({ type: "RESET" });
     if (formState.table || formState.id)
       document.getElementById("model").focus();
+    setErr(false);
   };
 
   function handleSwitch() {
@@ -338,6 +341,13 @@ function CarForm() {
           >
             Reset
           </button>
+          <div>
+            {err && (
+              <span className="badge rounded-pill mx-2 text-bg-info">
+                Fill Fields
+              </span>
+            )}
+          </div>
         </div>
       </form>
     </>

@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { selectColor } from "../helper";
 import { fetchCarImage } from "../api";
-import { CarContext } from "../Context/context";
 import FormOverlay from "../../common/FormOverlay";
 import FormSpinner from "../../common/FormSpinner";
 import "./ImageSearch.css";
@@ -13,13 +12,13 @@ function ImageSearch({
   setShowModal,
 }) {
   const Results = React.lazy(() => import("./Results"));
-  const { isLoading, setIsLoading } = useContext(CarContext);
   const [selColor, setSelColor] = useState(selectColor[0]);
   const [apiData, setApiData] = useState({});
+  const [searchLoading, setsearchLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setsearchLoading(true);
     fetchCarImage(
       `${formState.make} ${formState.model.trim()} ${
         Number(formState.model_year) < 100
@@ -28,8 +27,8 @@ function ImageSearch({
       } ${selColor}`
     ).then((res) => {
       setApiData(res.data);
-      setIsLoading(false);
-    });
+      setsearchLoading(false);
+    }).catch(e => setsearchLoading(false));
   };
 
   const handleImgClick = (data) => {
@@ -95,7 +94,7 @@ function ImageSearch({
                 </div>
               </div>
               <React.Suspense fallback={<FormSpinner />}>
-                <FormOverlay isLoading={isLoading}>
+                <FormOverlay searchLoading={searchLoading}>
                   {apiData.hasOwnProperty("items") && (
                     <Results
                       apiData={apiData}

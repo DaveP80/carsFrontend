@@ -6,6 +6,7 @@ import { CarContext } from "./components/Context/context";
 import CreateCar from "./components/CreateCar/CreateCar";
 import Spinner from "./common/Spinner";
 import { carImage } from "./components/helper";
+import Error from "./components/Error/Error";
 
 function App() {
   const AllCars = React.lazy(() => import("./components/AllCars/AllCars"));
@@ -38,8 +39,8 @@ function App() {
               <Route path="/cars/:id" element={<ShowCar />} />
               <Route path="/create" element={<CreateCar />} />
               <Route path="/index" element={<Index />} />
-              <Route path="/404" element={<h1>404 Error Not Found</h1>} />
-              <Route path="*" element={<h1>404 Error Not Found</h1>} />
+              <Route path="/404" element={<Error />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </Router>
         </CarContext.Provider>

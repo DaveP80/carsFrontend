@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ccar } from "../../assets";
 import { getSearchSugg } from "../api";
@@ -6,7 +6,7 @@ import Searchbar from "../Searchbar/Searchbar";
 import { CarContext } from "../Context/context";
 import "./Nav.css";
 
-function Nav2() {
+function Nav() {
   const { search, searchArr, setSearchArr } = useContext(CarContext);
 
   useEffect(() => {
@@ -75,4 +75,4 @@ function Nav2() {
   );
 }
 
-export default Nav2;
+export default Nav;

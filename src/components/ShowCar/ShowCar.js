@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Overlay from "../../common/Overlay";
 import { fetchCarById } from "../api";
 import { CarContext, CommContext, FormContext } from "../Context/context";
-import { setShape } from "../helper";
+import { setShape, carImageSrc } from "../helper";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import CarForm from "../CarForm/CarForm";
 import ThumbsUp from "./ThumbsUp";
@@ -37,15 +37,17 @@ function ShowCar() {
     id,
     showDel,
     setShowDel,
+    carImageSrc,
   };
 
   useEffect(() => {
     setIsLoading(true);
     fetchCarById(id)
       .then((res) => {
+        res.data[0] = carImageSrc(res.data[0]);
         setCar(res.data);
         setCount(res.data[0].count);
-        setDataShape(() => setShape(res));
+        setDataShape(() => setShape(res.data[0]));
         setIsLoading(false);
       })
       .catch((e) => navigate("/404"));

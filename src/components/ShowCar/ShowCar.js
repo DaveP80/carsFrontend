@@ -147,7 +147,7 @@ function ShowCar() {
                       />
 
                       <div className="mt-1 text-secondary text-center">
-                        {!car[0].preferences.imageURL
+                        {(car[0].preferences.imageURL && !car[0].preferences.imageURL.includes("gstatic"))
                           ? "stock image"
                           : "image from google"}
                       </div>

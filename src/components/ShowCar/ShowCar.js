@@ -73,7 +73,7 @@ function ShowCar() {
           {car.length > 0 && (
             <section className="container py-4 shadow rounded showcar-grid">
               <div className="row row-cols-1 row-cols-md-2">
-                <div className="col-md-7">
+                <div className="col-md-6">
                   <div className="shadow-border">
                     <h1 className="text-dark">{car[0].name}</h1>
                     <h5 className="text-secondary">
@@ -133,7 +133,7 @@ function ShowCar() {
                     />
                   </CommContext.Provider>
                 </div>
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <div className="container d-flex align-items-center justify-content-center mt-md-5 mt-2 imagestock-photo">
                     <div className="">
                       <img
